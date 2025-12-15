@@ -1,6 +1,6 @@
 
 *change directory
-cd "D:\Ahmad\Thesis\DrKeshavarz\Poverty Dynamics DLLM\data"
+cd "E:\my_papers\poverty_dynamics\poverty_line_data"
 use Y98_99_urban, clear
 destring strata*, replace
 destring HHID, replace
