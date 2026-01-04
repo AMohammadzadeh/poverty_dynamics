@@ -9,13 +9,13 @@ capture log close
 
 * 1. DIRECTORIES AND FILES
 global working_dir  "E:\my_papers\poverty_dynamics\poverty_line_data"
-global file_cross   "Y98_99_urban"      // Cross-section file (Wide or Long format setup)
-global file_panel   "Y98_99_urban_long" // Panel file (Long format) for Section 5
+global file_cross   "Y1402_1403_educ"      // Cross-section file (Wide or Long format setup)
+global file_panel   "Y1402_1403_educ_long" // Panel file (Long format) for Section 5
 global output_log   "parametric_results" // Name of the log file
 
 * 2. DEFINE YEARS
-global yr1 "98"  // Suffix for the first year (e.g., 98, 05, 2010)
-global yr2 "99"  // Suffix for the second year (e.g., 99, 10, 2015)
+global yr1 "1402"  // Suffix for the first year (e.g., 98, 05, 2010)
+global yr2 "1403"  // Suffix for the second year (e.g., 99, 10, 2015)
 
 * 3. VARIABLE NAMES (STUBS)
 * The code assumes variables are named like lcpc_98, strata_98, etc.
@@ -117,18 +117,22 @@ bys samp: gen obid= _n
 sort obid
 compress
 save bh1x2_bh2x1, replace
-
 * 2.2 BOOTSTRAP ERROR TERMS
 forval i= 1/500 {
     use eh_orig, clear
     set seed `i'
 
-    * 2.2.1 Get errors from Year 2
+    * 2.2.1 Get errors from Year 2 (Source) to apply to Year 1 size (Target)
     qui keep if samp== 2 & eh2<.
     qui keep eh2 samp
-    if obid_y1 > obid_y2 {
-        expand 2
+    
+    * DYNAMIC EXPANSION FIX
+    count
+    if r(N) < obid_y1 {
+        local exp_factor = ceil(obid_y1 / r(N))
+        expand `exp_factor'
     }
+    
     bsample obid_y1
     ren eh2 eth2
     qui gen obid= _n
@@ -141,14 +145,19 @@ forval i= 1/500 {
     tempfile stsec70
     save "`stsec70'"
 
-    * 2.2.2 Get errors from Year 1
+    * 2.2.2 Get errors from Year 1 (Source) to apply to Year 2 size (Target)
     use eh_orig, clear
     qui keep if samp== 1
     qui keep if eh1<.
     qui keep eh1 samp
-    if obid_y2 > obid_y1 {
-        expand 2
+    
+    * DYNAMIC EXPANSION FIX
+    count
+    if r(N) < obid_y2 {
+        local exp_factor = ceil(obid_y2 / r(N))
+        expand `exp_factor'
     }
+    
     bsample obid_y2
     ren eh1 eth1
     qui gen obid= _n

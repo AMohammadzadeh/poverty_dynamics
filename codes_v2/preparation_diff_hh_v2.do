@@ -17,12 +17,12 @@ local starts  98 99   1400 1401 1402
 local ends    99 1400 1401 1402 1403
 
 * POVERTY LINES
-local pl_98  26361483
-local pl_99  46464060
-local pl_1400 54221850
-local pl_1401 72518992
-local pl_1402 106303008
-local pl_1403 141539385
+local pl_98    5863711 
+local pl_99    8205691
+local pl_1400   12571554
+local pl_1401   17671052
+local pl_1402   22258561
+local pl_1403   29175368
 
 
 * B. Subgroup Names (Simple names only, no symbols)
