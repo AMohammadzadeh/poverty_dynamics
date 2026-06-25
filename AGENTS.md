@@ -20,11 +20,13 @@ The paper estimates chronic and transient poverty using synthetic panels when tr
   - `preparation_diff_hh_v2.do`: creates subgroup datasets.
 - `docs/`: project decision notes and methodological handoffs.
   - `residual_plot_decisions.md`: decisions for the 1398-1399 all-household residual normality figure.
+  - `population_stability_decisions.md`: decisions for the 1398-1399 all-household population-stability robustness check.
 - `1399-1400/`, `1400-1401/`, `1401-1402/`, `1402-1403/`: templated parametric scripts for each year pair and subgroup.
 - Root `parametric*.do`: current 1398-1399 scripts, including subgroup versions.
 - `88-89/` and `89-90/`: older historical scripts/results. Many paths still point to `D:\Ahmad\...`; port before rerunning.
 - `figures/`: figure scripts and generated image files. `figures/idn_figure 1.do` is adapted from Dang et al.'s Indonesia figure workflow.
-  - `residuals_9899_normality.do`: standalone robustness script for all-household 1398 and 1399 OLS residual histograms with fitted normal densities.
+  - `residuals_9899_normality.do`: standalone robustness script for all-household 1398 and 1399 OLS residual histograms with fitted normal densities, exported as separate year-specific figures.
+  - `population_stability_9899.do`: standalone robustness script for the weighted 1398-1399 composition balance table, Love plot, and separate categorical bar plots.
 - `irheis_weights/`: HIES weight files. Treat these as source inputs; do not modify casually.
 - `poverty_line_data/`: generated `.dta` intermediates and logs. This directory is ignored by git via `.gitignore`.
 
@@ -185,7 +187,7 @@ The main source is `paper_text/thesis.tex`. It currently contains:
 - DLLM model section.
 - Poverty line subsection.
 - Results tables for 1398-1399 through 1402-1403 and subgroups.
-- Empty `Robustness Checks` section.
+- Draft `Robustness Checks` section with 1398-1399 composition-stability and residual-normality diagnostics.
 - Draft `Potential Mechanisms` section.
 - Conclusion.
 
@@ -217,10 +219,10 @@ Current decision:
 
 - Use the all-household 1398-1399 model only.
 - Generate residuals from the exact unweighted OLS regressions used in `parametric.do`.
-- Plot 1398 and 1399 separately in two panels.
+- Plot 1398 and 1399 as separate standalone figures.
 - Use raw residuals with fitted normal densities.
 - Weight the displayed residual histograms by HIES `Weight`.
-- Export the figure from `figures/residuals_9899_normality.do`.
+- Export the figures from `figures/residuals_9899_normality.do`.
 
 Run from Stata with:
 
@@ -236,7 +238,7 @@ The manuscript has explicit red notes and structural gaps:
 
 - SPL paragraph in the introduction has `\textcolor{red}{to be completed}`.
 - The Iran poverty-rate sentence asks which rate, scope, and poverty line it refers to.
-- `Robustness Checks` is currently empty.
+- `Robustness Checks` now contains draft composition-stability and residual-normality diagnostics for 1398-1399; review wording and final figure selection before submission.
 - `Potential Mechanisms` asks for a histogram of non-labor earnings by head education and gender for two years.
 - The abstract emphasizes 1398-1399, but the results section now includes multiple year pairs through 1402-1403.
 - Some prose says the method is validated "for the first time in a developing country under sanctions"; treat this as a strong claim that needs careful support.
@@ -258,7 +260,24 @@ Before handing off manuscript changes:
 - Inspect the generated PDF around edited sections, tables, figures, bibliography, and cross-references.
 - If TeX is not available, say that clearly and at least run text-level checks with `rg` or `Select-String`.
 
-Stata verification has been performed for `figures/residuals_9899_normality.do`; LaTeX PDF rebuilds still require a local TeX toolchain.
+Stata verification has been performed for `figures/residuals_9899_normality.do` and `figures/population_stability_9899.do`; LaTeX PDF rebuilds still require a local TeX toolchain.
+
+For the population-stability robustness check, follow `docs/population_stability_decisions.md`.
+
+Current decision:
+
+- Use the all-household 1398-1399 model only.
+- Treat 1398 as the base year.
+- Use the age-aligned synthetic cohort: heads age `25-55` in 1398 and `26-56` in 1399.
+- Use HIES `Weight` for descriptive composition comparisons.
+- Focus the main diagnostic on weighted absolute standardized mean differences for time-invariant or slow-moving characteristics.
+- Export a detailed balance CSV, a Love plot that omits ProvinceCode rows, and separate age, education, and children bar plots from `figures/population_stability_9899.do`.
+
+Run from Stata with:
+
+```stata
+do "E:\my_papers\poverty_dynamics\figures\population_stability_9899.do"
+```
 
 ## Working Principles
 
