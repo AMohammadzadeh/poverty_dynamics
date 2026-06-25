@@ -1,0 +1,1842 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{lscape}
+\usepackage{pdflscape, adjustbox}
+\usepackage[para,online,flushleft]{threeparttable}
+\usepackage{amsmath,hyperref,amsfonts,caption,subcaption,graphicx,float,chngcntr,booktabs,array,lscape}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{longtable}
+\usepackage{adjustbox} 
+\usepackage[a4paper, total={6in, 10in}]{geometry}
+\usepackage{comment}
+ \usepackage{multirow}
+% Continuous Fig numbers
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+% Reference hyperlink color
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Research Proposal},
+    pdfpagemode=FullScreen}
+% Font
+\usepackage[T1]{fontenc}
+\usepackage{tgpagella}
+\usepackage{natbib}
+\usepackage{tabularx} 
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{subcaption}
+%% APA style
+\bibliographystyle{elsarticle-harv}
+%\biboptions{authoryear,square,comma}
+\makeatletter
+
+% Optional: Uncomment and adjust if you need Persian support
+%\usepackage{xepersian}
+%\settextfont{XB Niloofar}
+
+% Article metadata
+\title{Poverty Dynamics in Iran: Substitutes for Missing Data\thanks{We sincerely thank our colleagues at the Graduate School of Management and Economics (GSME) for their critical engagement during our weekly seminar series. Our gratitude also extends to the International Iranian Economic Association (IIEA) monthly webinar participants, and attendees in the XXX} }
+
+\author{GholamReza Keshavarz Haddad\thanks{(Corresponding Author) Associate Professor, GSME, Sharif University of Technology. ORCID: 0000-0001-5873-8217, Email: G.K.Haddad@sharif.edu} \and Ahmad MohammadZadeh \thanks{Researcher, GSME, Sharif University of Technology. Email: ahmad.mohamadzadeh@gmail.com} \and XX \thanks{ZZ} }
+\date{\today} % Leave empty to omit the date or specify if needed
+
+\begin{document}
+
+\maketitle
+
+ %‎\renewcommand{\baselinestretch}{1.7}
+ %\footnotesize{
+\begin{abstract}
+\noindent
+\textbf{Objective:} Measuring poverty dynamics---distinguishing chronic from transient poverty---is crucial for effective anti-poverty policies, yet constrained by limited panel data in developing countries.
+
+\textbf{Method:} We overcome this constraint by constructing a synthetic panel from the Iranian Household Expenditure and Income Survey (HIES). Using a consumption model, we estimate first-round consumption for households only observed in the second round, enabling dynamic poverty analysis despite the absence of true longitudinal data.
+
+\textbf{Findings:} Our analysis for 1398-1399 reveals that 29\% of households were chronically poor (poor in both years). Chronic poverty is markedly higher among vulnerable subgroups: 54\% in rural households, 40\% in female-headed households, and 34\% in households with non-university educated heads. Notably, our synthetic panel estimates consistently encompass the true panel values where available, validating the method's reliability.
+
+\textbf{Conclusion:} Synthetic panels provide a viable alternative for tracking poverty transitions where traditional panel data are absent, revealing significant heterogeneities that warrant targeted policy attention.
+\begin{comment}
+    Eliminating poverty, which is one of the most important objectives of countries, requires a deep understanding of the trends and dynamics of poverty and the distinction between chronic and transient poverty.
+However, given the lack of high-quality panel data, measuring movements in and out of poverty in developing countries is difficult. In this research, we build a synthetic panel by constructing a consumption model
+and estimating the first-round consumption of households surveyed in the second round. The analysis of Expenditures and Income Survey (HIES) for 1398 and 1399 shows that almost 29 percent of urban and rural
+households were poor in both years. In female-headed households, households with non-university educated
+heads, and rural households, this rate is 40, 34, and 54 percent, respectively, indicating their need for special
+attention. Moreover, the results of the synthetic panel virtually always include the true panel estimates.
+
+\end{comment}
+\smallskip
+
+\noindent \textbf{Keywords:} chronic and transient poverty, poverty dynamics, synthetic panel data\\
+\textbf{JEL Classification:} XX; YY; ZZ
+\end{abstract}
+
+
+% \mykeyword{chronic and transient poverty, poverty dynamics, synthetic panel data}
+%\newpage
+	
+\section{Introduction}
+Eradicating poverty is a crucial objective for nations worldwide, with the United Nations committing to "ending poverty in all its forms everywhere" as one of its sustainable goals. However, the COVID-19 pandemic has impeded progress towards this goal, resulting in an increase in the global rate of extreme poverty for the first time in over two decades and an additional 120 million people living in poverty in 2020\footnote{\url{https://sdgs.un.org/goals/goal1}}.
+
+The \$6.85 per day threshold, measured in 2017 Purchasing Power Parity (PPP) exchange rates, constitutes a standardized international poverty line established by the World Bank \citep{WorldBank2020}. It is designed specifically to measure poverty at higher income levels and is particularly relevant for the economic context of upper-middle-income countries \citep{Ferreira2016}. This line is part of a larger tiered analytical framework that includes the extreme poverty line (\$2.15) and a lower-middle-income line (\$3.65), providing a multi-lens view of global deprivation, \citep{Jolliffe2022}. 
+
+%\subsection{Engel Coefficient}
+The use of a food expenditure share exceeding 50\% of total consumption as a poverty line is based on \textbf{Engel's Law}, which states that as household income rises, the proportion spent on food falls \citep{Engel1857}. A share above 50\% signals that a household is allocating the majority of its resources to basic sustenance, leaving little for other essential needs such as healthcare, education, and shelter \citep{Ravallion1992, Ravallion2011}. This indicator is behaviorally grounded, relatively inflation-resistant, and useful for cross-sectional and historical comparisons, especially in low-income settings \citep{Deaton1997}.
+
+\begin{figure}[!htb]
+   \caption{Headcount Ratio Based on Three Poverty Lines, by Area of Residence}
+    \includegraphics[width=0.95\linewidth]{"Figures/GL Pop.pdf"}
+    \caption*{\scriptsize \textbf{Note:} LMICs and UMICs stad for  lower-middle-income and upper-middle-income countries, respectively.   All of the poverty line reveal quite similar trend for population under poverty line, however  level of the lower-middle-income poverty line is arguably lower than the engel coefficient and that for upper-middle-income countries. We use the PPP converter prodeuced by word bank which is based on the 2017 fixed prices. The red vertical line reffers to the presidential ellection years and the tellow one shows the year that CPI growth was over 49 percent and tregered the first social unrest in some cities during the Hashemi Rafsanjani's presidential administaration.\\
+    Source: HIES 1991-2024 for food, non-food and househols' size, and world bank for PPP converter.}
+    \label{fig:placeholder}
+\end{figure}
+However, its application has significant limitations. It does not account for demographic differences, shifts in food quality, or the growing importance of non-food necessities in modern economies \citep{Lipton1988, Banerjee2011}. Consequently, while informative, the 50\% threshold is best used as one component within a broader, multidimensional poverty assessment rather than as a standalone measure \citep{Alkire2011, WorldBank2017}. 
+\autoref{fig:placeholder} plots the  headcount ratio trends by region, level of poverty line upper-Middle-Income Countries (6.85 PPP),  Lower-Middle-Income Countries (3.65 PPP) and the headcount ratio based on food expenditures over 50\% of total monthly expenditures.  The patterns of the trends are very similar and almost decreasing, although after the US exit from the JCPOA, the headcount ratio turned to exhibit increasing trend. The poverty rate in Rural areas is significantly higher than urban areas and in 2010 it reached to the highest level of about 50\% in terms of 6.85 PPP exchange rate.\par
+The utilization of the \$6.85 per day poverty line, the global benchmark for Upper-Middle-Income Countries (UMICs), often yields significantly elevated poverty headcount ratios in the rural context, suggesting a critical disconnect between the uniform international standard and local cost-of-living heterogeneity. This discrepancy is largely attributed to the non-application of intra-country spatial price deflators, which fail to account for the systematic differences in the cost of a basic needs basket between urban and rural areas, \cite{chen2020, dabalen2019}. 
+
+Furthermore, the overestimation of rural poverty is compounded by the challenge of accurately valuing non-monetary consumption---specifically, own-produced food consumed by subsistence and semi-subsistence farming households---which is a major component of real welfare in rural UMICs yet is frequently undervalued or inconsistently measured in household surveys, \cite{ravallion2008}. 
+
+While the World Bank has advanced a Societal Poverty Line (SPL)---defined as
+$$\text{SPL} = \max\{\$2.15 \text{ PPP}, \$1.15 + 0.5 \times \text{Median Consumption} \}$$
+\textcolor{red}{to be completed} \par
+to introduce a relative component that reflects rising consumption standards, the absolute \$6.85 line itself, derived from the median of UMIC national lines, acts as a high poverty threshold that can dramatically exceed the actual national SPL for many UMICs, resulting in a structurally high poverty count that may overstate deprivation relative to locally accepted minimum living standards, \cite{Jolliffe2022AssessingTI}. 
+
+Consequently, researchers advocate for sub-national poverty estimates that incorporate region-specific price indices and rigorously impute the value of auto-consumption to align international measures with localized welfare realities, \cite{deaton2002, worldbank2024}.
+
+
+
+In Iran, the poverty rate was reported ( \textcolor{red}{Which poverty rate? whole country? Based on which poverty line?} )as 16\% in 2017, with unofficial statistics indicating a significant increase since then, \citep{majlis1398poverty}.
+%%%%%%%%%%%%%%%%%%%%%%%
+The shift from examining static poverty profiles or national trends to analyzing poverty dynamics constitutes a crucial methodological and theoretical advance in development economics and social policy. For your study of Iran, focusing on dynamics provides a fundamentally richer understanding necessary for effective, targeted intervention.The core argument for this transition rests on the fact that poverty is an inherently heterogeneous and temporal phenomenon, \cite{BaulchHoddinott2000}.\par
+1. Static analyses, typically derived from cross-sectional data, only capture a snapshot in time and are inherently limited in addressing the processes that determine an individual's or household's welfare trajectory.\par
+2.  A dynamic approach, relying on longitudinal (panel) data, allows for the crucial disaggregation of the poor population into distinct sub-groups, which static measures conflate, \cite{BarrettCarter2016}.\par
+The most significant conceptual contribution of poverty dynamics is the distinction between chronic and transitory (or transient) poverty, \cite{HulmeShepherd2003}.
+ Households or individuals who remain below the poverty line for an extended period, often across multiple survey waves are known as chronically poor. This group is typically trapped by deep-seated structural issues and low-asset endowments. In the context of Iran, for instance, high and persistent inflation coupled with structural unemployment may contribute to a rising chronic poverty rate, as suggested by recent analyses, \cite{EslamiHoseini2024}. Households with transitory poverty move into and out of poverty, often due to temporary income shocks, such as illness, job loss, climate-related events (like floods), or volatile price fluctuations.\par
+ Policy prescriptions fundamentally differ for these two groups. Anti-poverty strategies based on static data may fail because they apply generic interventions to a heterogeneous population.\par
+ A dynamic perspective allows scholars and policymakers to quantify and analyze vulnerability to poverty \cite{ChaudhuriJalanSuryahadi2002}. This metric identifies the segment of the non-poor population that faces a high risk of falling into poverty in the future due to shocks. Analyzing vulnerability, a forward-looking measure, is essential for designing preventative rather than purely reactive policy. In an environment like Iran, characterized by macroeconomic volatility, high inflation, and on-again/off-again sanctions \cite{WorldBank2023}, understanding which households (e.g., those in the shrinking middle class) are vulnerable becomes critically important for preventing a broader social catastrophe.  Static analysis can only identify the correlates of poverty (e.g., household size, education level of the head). In contrast, dynamic analysis identifies the specific events and processes (drivers) that cause households to transition into or out of poverty \cite{McKayOkidi2003}.
+ 
+ %Using econometric techniques like logit or probit models on panel data, one can determine:The probability of exit from poverty (e.g., driven by increased returns to education or formal sector employment).The probability of entry into poverty (e.g., driven by illness, death of a wage earner, or covariate shocks like severe inflation or natural disasters).This provides actionable intelligence for policymakers. For instance, if entry is strongly linked to health shocks, policy attention should shift to providing effective health insurance.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+To effectively address poverty, policymakers must engage in a process of accurate evaluation and observation, as there are a variety of policy options available, ranging from short-term support for families at risk of poverty to long-term measures such as investment in education and skill training through achieving economic growth. To prevent inefficient use of limited resources, it is crucial to understand trends and dynamics of poverty, and distinguish between transient and chronic poverty \citep{dang2020impute}. 
+Static measures of poverty can lead to inclusion and exclusion errors, as policymakers may mistakenly provide resources to individuals who are not actually poor, but experiencing temporary financial hardships, or fail to provide support to poor families experiencing short-term favorable circumstances. Analysis of poverty dynamics can assist policymakers in designing safety net policies to protect vulnerable households and gain a better understanding of factors that contribute to economic mobility \citep{baulch2000economic}.
+
+ 
+Measuring movements in and out of poverty, particularly in developing countries, is a challenging task due to the lack of panel data, which is the most appropriate source of information. However, there is a growing body of literature that has developed techniques to measure poverty dynamics in the absence of panel data \citep{cruces2015estimating}.
+
+This paper seeks to estimate poverty transitions in Iran using the "synthetic panel" method developed by \citep{dang2014using}, based on Expenditures and Income surveys taken in 2019 and 2020. These years are particularly important due to the severity of sanctions against Iran and the outbreak of the coronavirus. The synthetic panel method produces lower and upper bound estimates of poverty transitions, which are expected to sandwich true poverty transition estimates.\par
+This paper validates the synthetic panel approach for the first time in a developing country under sanctions, and the results indicate that the lower and upper bounds fully encompass the true poverty dynamic measures in most cases. Additionally, the results show that almost 29\% of urban and rural households were poor in both years, with higher rates in female-headed households, households with non-university educated heads, and rural households, indicating a need for special attention in these groups.\par
+The rest of the paper is organized as follows. Section two outlines the underlying literature, establishing a theoretical and empirical foundation by reviewing the key distinction between static and dynamic poverty analysis and tracing the methodological evolution from panel data studies to synthetic panel techniques designed for contexts with repeated cross-sectional data. Section three details the data sources and descriptive statistics, while section four explicates the econometric methodology, focusing on the Dang, Lanjouw, Lanjouw, and Muñoz (DLLM) model for estimating poverty transition bounds. Section five presents the core empirical results, validating the synthetic panel estimates and analyzing poverty dynamics for the aggregate population and key socioeconomic subgroups. Section six discusses potential mechanisms driving the observed dynamics, and section seven concludes by summarizing the findings and their implications for policy and future research.
+
+\section{Literature}
+Poverty literature can be broadly categorized into two main approaches: poverty dynamics and static poverty analysis. While static poverty analysis is based on cross-sectional data from households, poverty dynamics studies utilize longitudinal data that tracks the same households over a period of time \citep{yaqub1999poverty}. This paper focuses specifically on the literature pertaining to 
+poverty dynamics.
+In their work on poverty analysis, \cite{dang2020impute}
+has classified imputation methods based on the availability of consumption data into three categories: 1) completely missing, 2) partially missing, and 3) cross-sections available but missing panel data. In this paper, we will first review studies that have employed panel data for analyzing poverty dynamics, followed by an examination of alternative methods in line with Dang's categorization.
+
+
+
+One notable example of a panel data study on poverty dynamics is the "Panel Study of Income Dynamics" project, initiated by \cite{duncan1984years} in 1968. The study surveyed 5,000 American households over a period of nearly ten years, covering various aspects of their income status and occupation, even if they had moved residences. The authors of the study also discussed different perspectives on poverty, such as poverty being caused by lack of skills and opportunities, or personal characteristics. They argue that poverty dynamics analysis can significantly improve our understanding of the extent and causes of poverty. Their findings indicate that between 1969 and 1978, around 25\% of the population experienced transient poverty, while less than 1\% were chronically poor.
+
+
+\cite{salehi2013mobility}
+conducted a study to estimate poverty dynamics in Iran between 1992 and 1995 using the Expenditures and Income Survey. They argue that using per capita household expenditures as a measure of welfare is more accurate than income, as it is derived from more questions and people tend to give inaccurate responses when asked about their income. They applied weights and averaged the expenditures over two consecutive years to correct for measurement errors and attrition. The study found that younger individuals and female-headed households are more likely to experience long-term poverty, and that an individual's place of residence can influence the duration of poverty. They conclude that providing education opportunities can be an effective strategy to reduce poverty, as it has a strong correlation with chronic poverty.
+
+In their study, \cite{lawson2002chronic}
+highlight the limitations of panel data in analyzing poverty dynamics, such as measurement errors that arise from tracking households over time and potential biases arising from interviewee reluctance. They argue that in the absence of panel data, alternative methods such as repeated cross-sections or proxies for chronic poverty can be used to estimate poverty dynamics. They also suggest that chronic poverty is typically caused by lack of human and physical assets, as well as location in remote or disadvantaged areas.
+
+The problems associated with panel data, compounded by the lack of such data in developing countries, necessitate the exploration of alternative solutions for analyzing poverty dynamics. We continue to examine the literature on poverty dynamics according to the categories previously mentioned.
+
+In the absence of panel data, researchers have proposed a variety of methods to estimate poverty dynamics. \cite{sahn2000poverty}
+for instance, propose a method for building a wealth index when consumption data are completely missing. They use DHS\footnote{Demographic and Health Surveys} data and various household characteristics, such as water source, toilet facilities, and construction materials, as well as durables, such as the ownership of a radio or television, to create a wealth index for 11 African countries between 1986 and 1998. Their findings suggest that the overall poverty rate has declined in this period, largely due to the growth of rural areas.
+
+  Another alternative method for estimating poverty dynamics in the absence of panel data is the use of a model to identify the factors affecting consumption, as proposed by \cite{mathiassen2013testing}. This approach allows for the development of a light survey that can be collected annually, and when combined with consumption data, can be used to estimate the poverty rate.
+
+The third category of literature, which includes the present research, consists of papers that use cross-sections to build panel data. \cite{dang2014using} propose a method, known as the DLLM method, for estimating poverty dynamics using two or more rounds of cross-sections in the absence of panel data. This method estimates a range for poverty dynamics by first creating a model of consumption using only time-invariant covariates in the first round of data, and then applying the same model to the second round of data. The authors provide both parametric and nonparametric bounds for Vietnam and Indonesia and compare the results with true values. They conclude that the bounds virtually always include the true panel estimates, and that the success of the method is contingent on the ability to predict the dependent variable of interest or capture the range of autocorrelation for the error terms.
+
+\cite{cruces2015estimating}
+further validate the DLLM method in three countries and three different scenarios: when income is used as the measure of welfare instead of consumption, when the time interval between cross-sectional data is long, and when there are multiple transition lines. They choose Chile, Peru, and Nicaragua for their research due to the availability of panel data in these countries. They conclude that while the estimated bounds encompass the true value in different scenarios, the narrowness of the bounds is highly dependent on the selected variables.
+
+
+% به جز مطالعه‌ی ذکرشده، پژوهش‌های متعدد دیگری نیز اقدام به استفاده از روش 
+% \lr{DLLM}
+% کرده‌اند. به‌عنوان مثال فری‌یرا و همکاران 
+% \lr{\citep{ferreira2012economic}}
+%  به تحلیل پویایی فقر در ۱۸ کشور آمریکای لاتین پرداخته‌اند و پرز
+% \lr{\citep{perez2015moving}}
+%  پویایی فقر را در مکزیک بررسی کرده است. اگرچه مطالعات نسبتاً قابل‌توجهی درباره‌ي روش 
+%  \lr{DLLM}
+% انجام شده است، اما این مطالعات اغلب بر کشورهای در حال توسعه متمرکز بوده‌اند و نیاز به ارزیابی این روش در کشورهای توسعه‌یافته و دارای داده‌های باکیفیت وجود دارد. در همین زمینه، هرالت و جنکینز 
+% \lr{\citep{herault2019valid}} 
+% روش مذکور را با داده‌های واقعی استرالیا و بریتانیا مورد ارزیابی قرار داده‌اند و اثر تغییرات سن سرپرست خانوار هنگام تعیین نمونه و اثر استفاده از تعاریف مختلف برای تعیین کوهورت\LTRfootnote{Cohort} 
+% را بر نتایج سنجیده‌اند. نویسندگان نشان داده‌اند که بازه‌های به‌دست آمده از روش
+% \lr{DLLM}
+% تقریباً همواره شامل مقدار واقعی پویایی فقر است.
+
+It is worth noting that the DLLM method has its own limitations. One such limitation is the need for true panel data to estimate the correlation of error terms. To address this issue, \cite{dang2013measuring} propose a method that utilizes the country's data to estimate the correlation of error terms and obtain a point estimation instead of bounds. However, as highlighted by \cite{herault2019valid}, this method may not be suitable for developed countries, as the results differ significantly from the true values.
+
+As noted by \cite{bourguignon2020synthetic}, synthetic panels are highly dependent on the assumptions underlying the parameter estimation process. They propose an alternative method to estimate the correlation coefficient based on an AR(1) specification, and evaluate the results using real data from Mexico collected between 2002 and 2005. Although the results do not differ significantly from the real data, certain income mobility measures are highly sensitive to the value of the auto-regressive coefficient.
+
+Poverty dynamics have also been studied in Iran. \cite{گریوانی2019تحلیل} use data from the Expenditures and Income Survey of 2012, 2015, and 2016 to analyze poverty dynamics in urban areas. They find that the difference between the synthetic panel and the real panel is only 1.6 percent. Additionally, they find that 80 percent of the poor (non-poor) families in 1395 were also poor (non-poor) in 1391 and 1394.
+
+Overall, these studies provide additional insights into the limitations of the DLLM method and alternative methods for estimating poverty dynamics in the absence of panel data. They also highlight the importance of considering the specific context and assumptions of the data and methods used in poverty dynamics analysis.
+%ادبیات موجود را می‌توان بر اساس روش‌های مختلف جانهی\footnote{Imputation فرایند جای‌گذاری داده‌های گم‌شده بر اساس داده‌های موجود} نیز تقسیم‌بندی کرد. در ادامه طبق دسته‌بندی ارائه‌ شده توسط دنگ \lr{\citep{dang2020impute}} به معرفی انواع روش‌های جانهی می‌پردایم.
+
+\section{Data}\label{data}
+In this paper, we utilize data from the Household Expenditures and Income Survey (HIES) for the years 2019 and 2020 in Iran. These years are particularly significant as they reflect the economic and social conditions in Iran during a time of increased poverty and macroeconomic instability, as a result of both the COVID-19 pandemic and US sanctions. According to the Poverty Monitoring report published by Iran’s Ministry of Cooperatives, Labour, and Social Welfare in 2020, the poverty line rose by 38\% from 2019 to 2020, reaching a level of 1,254,000 Toman.
+
+The HIES is a nationally representative, two-stage stratified survey that has been conducted annually by the Statistical Center of Iran since 1935, with the exception of the years 1976, 1978 and 1981. The survey includes both demographic and income information, with a focus on expenditures. Information on over 1,000 items is collected from around 20,000 urban and 18500 rural households in 2019, and 19,300 urban and 18,250 rural households in 2020. The survey consists of four sections: social characteristics of family members, place of residence and major household appliances, expenditures in the last month or 12 months for durable goods, and income of family members.
+
+In this research, I extract households’ characteristics from section 1 and their expenditures from section 3. The poverty line used in this analysis is based on the Poverty Monitoring report and is set at 1,254,000 Toman per capita per month for 2020 and 906,000 Toman for 2019.
+
+
+%همان‌‌طور که در شکل \ref{co\texttt{sts} مشاهده می‌شود، خانوارهای شهری ایران سالانه به‌طور میانگین 621392 هزار ریال برای خرید و بهره‌مندی از کالاها و خدمات مصرفی هزینه کرده‌اند که این مبلغ ۳۱درصد افزایش نسبت به نتایج به‌دست‌آمده از این طرح در سال گذشته را نشان می‌دهد.
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[scale=0.8]{costs.png}
+%	\caption{متوسط هزینه‌ی کل، خوراکی و دخانی و غیرخوراکی خالص و ناخالص سالانه‌ی یک خانوار شهری و روستایی سال 1398 و 1399 \\
+%	منبع: چکیده‌ی نتایج طرح آمارگیری هزینه و درآمد خانوارهای شهری و روستایی سال 1399}
+%\label{costs}
+%\end{figure}}
+
+
+
+\section{Model}
+I use the DLLM method to estimate poverty dynamics in Iran.
+We construct a consumption model for each year 1 and year 2:
+
+\begin{align}
+	C_{i1} = \beta'_1X_{i1} + \epsilon_{i1}
+	\label{eq1}
+\end{align}
+\begin{align}
+	C_{j2} = \beta'_2X_{j1} + \epsilon_{j2}
+	\label{eq2}
+\end{align}
+Where C is the variable of consumption, i and j represents the households, $X_i$ is the vector of time-invariant covariates, $\beta$ is the vector of parameters to be estimated, and $\epsilon$ is the error term. The consumption of year 1 for household j who is surveyed in year 2 is not observable, but it can be estimated. The two equations are estimated using Ordinary Least Squares (OLS) regression.
+The variables selected for the models are: Household’s head age, sex, number of years of education, number of children, area of living (urban/rural), province, household’s size, status of employment (employed/unemployed) and status of marriage (married/single) of the household's head.
+
+The DLLM method makes two key assumptions: first, that the underlying population sampled is the same in both years, and second, that the error terms are positive quadrant dependent, meaning that the correlation of the error terms is non-negative. Based on these assumptions, we can derive nonparametric bounds. The upper bound estimates are given by the probability that the two error terms are completely independent of each other. To derive the nonparametric upper bounds, for each household j in round 2, a random draw with replacement is taken from the empirical distribution of the predicted residuals and the consumption of year 1 is estimated using the following equation:
+	 
+	 \begin{align*}
+	 	\widehat{C_{j1}^U} = \hat{\beta}'_1X_{j2} + \check{\epsilon_{j1}}
+	 \end{align*}
+ % که 
+ % $\check{\epsilon_{j1}}$
+ % جمله‌ی باقیمانده‌ای است که در هر $j$ جایگذاری شده است. اکنون داده‌ی تابلویی ساختگی ساخته شده است که می‌توانیم به کمک آن پویایی فقر را محاسبه کنیم.
+ 
+ The lower bound estimates are given by the probability that 
+ the two error terms in the consumption model are completely dependent on each other. the consumption of year 1 is estimated using the following equation:
+ 
+ \begin{align*}
+ 	\widehat{C_{j1}^L} = \hat{\beta}'_1X_{j2} + \gamma \hat{\epsilon}_{j2}
+ \end{align*}
+ Where scalar $\gamma$ is chosen to ensure the standard deviation of the imputed Year 1 residuals distribution equals $\hat{\sigma}_1$. 
+
+In order to narrow the bounds, DLLM proposed a parametric approach which assumes that the error terms have a bivariate normal distribution. The correlation between the error terms, denoted as $\rho$, is calculated using true panel data from other similar countries. This allows for the calculation of poverty dynamics statistics such as the probability of being poor in year 1 and also poor in year 2, denoted as $Prob(C_{ji}<z_1 \ and \ C_{j2}<z_2)$, using the bivariate normal cumulative distribution function, denoted as $\phi$, and the poverty lines for year 1 and year 2, denoted as $z_1$ and $z_2$ respectively:
+\begin{align}
+	Prob(C_{ji}<z_1 \ and \ C_{j2}<z_2) = \phi \left(\dfrac{z_1-\beta'_1X_{j1}}{\sigma_1}, \dfrac{z_2-\beta'_2X_{j2}}{\sigma_2} ,\rho \right)
+\end{align}
+
+\subsection{Poverty Line: The \$6.85 per Day (2017 PPP) Threshold}
+The \$6.85 per day threshold, measured in 2017 Purchasing Power Parity (PPP), is a standardized international poverty line established by the World Bank for assessing poverty in upper-middle-income countries \citep{WorldBank2020}. It is derived from the International Comparison Program's (ICP) 2017 benchmark, which provides conversion factors that equalize purchasing power across currencies, enabling meaningful cross-country comparisons by accounting for differences in national price levels \citep{WorldBank2017}. This line is part of a tiered measurement system that also includes an extreme poverty line (\$2.15) and a lower-middle-income line (\$3.65), allowing for nuanced analysis of economic well-being across different development contexts \citep{Jolliffe2022}.
+
+The use of the 2017 PPP update, including the \$6.85 line, is methodologically justified for several reasons. First, it maintains \emph{temporal comparability}: PPPs are not static, and the 2017 benchmark incorporates more recent price data, reducing biases inherent in outdated conversion factors \citep{Deaton2010}. Second, it ensures \emph{cross-country consistency}, creating a standardized welfare metric that allows for coherent global poverty aggregation and comparison, which is essential for tracking progress toward international targets like Sustainable Development Goal 1 \citep{Ravallion2016}. Third, it addresses a measurement gap in \emph{higher development contexts}, where the extreme poverty line becomes less informative; the \$6.85 threshold better captures economic vulnerability and modest living standards prevalent in upper-middle-income countries \citep{Ferreira2016}. Finally, it aligns with the \emph{evolving global income distribution}, facilitating the study of poverty gradations and enabling a more comprehensive assessment of inclusive growth \citep{Lakner2020}.
+
+Nonetheless, PPP-based measures have recognized limitations. The construction of PPPs is methodologically complex, and revisions can create discontinuities in historical poverty series \citep{Deaton2005}. Critics also note that uniform international lines may not adequately reflect locally specific needs and social definitions of poverty \citep{Reddy2008}. Consequently, best practice recommends that the \$6.85 (2017 PPP) line be used \emph{in conjunction with} national poverty lines and complementary multidimensional deprivation indices \citep{Alkire2011}.
+
+
+
+
+
+%
+%در یک بررسی اولیه، حدود ناپارامتریک برای سال‌های 1398 و 1399 محاسبه شده و نتایج آن در جدول \ref{table1} قابل مشاهده است. برای محاسبه‌ی این حدود، تنها یک مدل در ساده‌ترین شکل آن و با متغیرهای مستقل سن، جنسیت و سال‌های تحصیل سرپرست تخمین زده شده است. خط فقر سال‌های 1398 و 1399 بر مبنای روش ارائه‌شده توسط 
+%\cite{majlis1395poverty}
+%محاسبه‌ شده است که به‌ترتیب برابر با 8,248,972 ریال و 10,857,318 ریال سرانه در ماه است. ستون 
+%\lr{Truth}
+%نشان می‌دهد که مقدار واقعی پویایی برای خانوارهای مشترک در این دو سال به چه میزان بوده است. به‌عنوان مثال، بر اساس نتیجه‌ی به‌دست آمده، بین ۲٫۳ تا 16٫۷درصد از جمعیت کشور در این دو سال از فقر خارج شده‌اند. مشاهده می‌شود که در تمام حالات حدود ناپارامتریک دربردارنده‌ی مقدار واقعی پویایی است؛ اگرچه به‌دلیل سادگی مدل و استفاده از روش ناپارامتریک حد بالا و حد پایین فاصله‌ی قابل‌توجهی با یکدیگر دارند که این مسئله اهمیت تعریف دقیق مدل و استفاده از روش پارامتریک را نشان می‌دهد.
+%
+%\begin{table}[h!]
+%	\captionsetup{font=scriptsize}
+%%	\captionsetup{justification=centering}
+%%	 \captionsetup{labelsep=newline}
+%	\begin{latin}
+%	\centering
+%	\begin{tabular}{lllr}
+%		\toprule \toprule
+%		1398-1399	&         Lower Bound  & Truth & Upper Bound       \\
+%		\midrule
+%		Poor, poor              &  27.99    & 23.08 & 11.46             \\
+%		& & (0.3) & \\
+%		Poor,nonpoor                &      0   & 9.7 &29.19     \\
+%		& & (0.2) & \\
+%		&                     \\
+%		[1em]
+%		Nonpoor, poor            &       0.19     & 10 & 16.70     \\
+%		& & (0.2) & \\
+%		&                     \\
+%		[1em]
+%		Nonpoor, nonpoor               &      71.83   & 57 & 42.63      \\
+%		& & (0.3) & \\
+%		\bottomrule\bottomrule
+%	\end{tabular}
+%\end{latin}
+%\caption[]{درصد پویایی فقر، محاسبه‌شده با استفاده از داده‌های طرح هزینه و درآمد خانوار سال‌های 1398 و 1399\newline
+%اعداد داخل پرانتز خطای معیار را نشان می‌دهند}
+%\label{table1}
+%\end{table}
+
+\section{Results}
+The present study examines poverty dynamics in the period of 2019 and 2020, with a secondary objective of validating the results of the synthetic panel approach against those of true panel data. Table \ref{table1} presents the results for all urban and rural households. Three specifications are considered, with varying assumptions on the correlation between error terms ($\rho$).
+Specification 1 assumes that $\rho=1$ for the lower bounds and $\rho=0$ for the upper bounds, representing the parametric equivalent of the nonparametric bounds. Specification 2 approximates $\rho$ with 0.8 and 0.2 for the lower and upper bounds, respectively. Specification 3 further narrows the bounds by approximating $\rho$ with 0.7 and 0.3 for the lower and upper bounds, respectively. It is expected that each specification provides narrower bounds compared to the previous specification, however, this also increases the possibility that the true poverty dynamic rates from the panel data fall outside of the bounds.
+
+
+
+As can be seen in Table \ref{table1}, the true poverty dynamic rates from the panel data are within the lower and upper bounds estimated by the synthetic panel approach. For instance, based on the parametric approach in Specification 3, between 27\% and 32\% of households that were poor in 2019 were also poor in 2020.
+
+	
+	\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics for all rural and urban households}
+    \label{table1}
+       \begin{tabular}{lccccccccc}
+        \toprule
+        Poverty Status
+        & \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+        & \multicolumn{3}{c}{Parametric lower bound}
+        & \multicolumn{1}{c}{Truth}
+        & \multicolumn{3}{c}{Parametric upper bound}
+        & \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+        \cmidrule(lr){3-5} \cmidrule(lr){7-9}
+        & & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+        \midrule
+
+        Poor, poor
+        & 14.6 & 16.1 & 12.9 & 11.8 & 9.4 & 8.8 & 8.2 & 7.1 & 6.7 \\
+        Std. Dev.
+        &     &     &     &     & 0.4 &     &     &     &     \\
+        \addlinespace[0.2em]
+
+        Poor, nonpoor
+        & 1.1 & 0.9 & 4.1 & 5.1 & 7.5 & 8.1 & 8.7 & 9.9 & 9.8 \\
+        Std. Dev.
+        &     &     &     &     & 0.5 &     &     &     &     \\
+        \addlinespace[0.2em]
+
+        Nonpoor, poor
+        & 3.4 & 3.3 & 6.5 & 7.5 & 9.9 & 10.6 & 11.2 & 12.3 & 11.2 \\
+        Std. Dev.
+        &     &     &     &     & 0.5 &     &     &     &     \\
+        \addlinespace[0.2em]
+
+        Nonpoor, nonpoor
+        & 80.9 & 79.7 & 76.6 & 75.5 & 73.1 & 72.5 & 71.9 & 70.8 & 72.3 \\
+        Std. Dev.
+        &      &      &      &      & 0.6 &      &      &      &      \\
+        \midrule
+
+        N
+        & 5799 & 5799 & 5799 & 5799 & 11485 & 5799 & 5799 & 5799 & 5799 \\
+        \bottomrule
+    \end{tabular}
+    \caption*{ \footnotesize \textbf{Note:}  This table illuastrarates that between 2019 and  2020....}
+\end{table}
+In order to further understand the dynamics of poverty in Iran, we proceed to calculate poverty dynamics for different subgroups of the population. Table \ref{table2} presents the results for female-headed households. The results show that the probability of these households remaining in poverty in both years is higher than other types of households. This is consistent with the general belief that, given fewer job opportunities, women are more vulnerable to poverty than men in society. Female-headed households typically shoulder various responsibilities and, due to the lack of access to high-paying jobs, they resort to working in unofficial, part-time, or low-paying jobs \citep{yoosefi2020challenges}. These findings highlight the importance of considering the specific needs and vulnerabilities of female-headed households in poverty reduction policies and programs.
+
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics for female-headed households}
+    \label{table2}
+        \begin{tabular}{lccccccccc}
+    \toprule
+    Poverty Status
+    & \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+    & \multicolumn{3}{c}{Parametric lower bound}
+    & \multicolumn{1}{c}{Truth}
+    & \multicolumn{3}{c}{Parametric upper bound}
+    & \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+    \cmidrule(lr){3-5} \cmidrule(lr){7-9}
+    & & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+    \midrule
+
+    Poor, poor
+    & 18.8 & 21.5 & 18.6 & 17.5 & 14.8 & 14.0 & 13.3 & 11.9 & 12.4 \\
+    Std. Dev.
+    &      &      &      &      & 1.7  &      &      &      &      \\
+    \addlinespace[0.2em]
+
+    Poor, nonpoor
+    & 3.8 & 2.7 & 5.6 & 6.7 & 9.4 & 10.2 & 10.9 & 12.3 & 11.5 \\
+    Std. Dev.
+    &     &     &     &     & 1.9 &     &     &     &     \\
+    \addlinespace[0.2em]
+
+    Nonpoor, poor
+    & 7.8 & 5.1 & 8.0 & 9.1 & 11.9 & 12.6 & 13.3 & 14.7 & 14.2 \\
+    Std. Dev.
+    &     &     &     &     & 1.9 &     &     &     &     \\
+    \addlinespace[0.2em]
+
+    Nonpoor, nonpoor
+    & 69.6 & 70.7 & 67.8 & 66.7 & 63.9 & 63.2 & 62.5 & 61.1 & 61.9 \\
+    Std. Dev.
+    &      &      &      &      & 2.6  &      &      &      &      \\
+    \midrule
+
+    N
+    & 441 & 441 & 441 & 441 & 862 & 441 & 441 & 441 & 441 \\
+    \bottomrule
+\end{tabular}
+    \caption*{ \footnotesize \textbf{Note:}  This table illustrates that between 2019 and  2020.. }
+\end{table}
+
+Another factor that can affect chronic poverty is education. It is widely acknowledged that higher levels of education are associated with increased employability and income-generating opportunities \citep{bilenkisi2015impact}. Table \ref{table3} presents the poverty dynamics for households whose head lacks university education. The results suggest that households with non-university educated heads are more likely to remain in poverty compared to households with university-educated heads. These findings underscore the importance of investment in education and skill training as a means of reducing poverty and promoting economic mobility.
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics among households with non-university-educated heads}
+    \label{table3}
+\begin{tabular}{lccccccccc}
+    \toprule
+    Poverty Status
+    & \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+    & \multicolumn{3}{c}{Parametric lower bound}
+    & \multicolumn{1}{c}{Truth}
+    & \multicolumn{3}{c}{Parametric upper bound}
+    & \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+    \cmidrule(lr){3-5} \cmidrule(lr){7-9}
+    & & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+    \midrule
+
+    Poor, poor
+    & 17.7 & 19.1 & 15.1 & 13.9 & 11.0 & 10.4 & 9.7 & 8.3 & 8.0 \\
+    Std. Dev.
+    &      &      &      &      & 0.5 &      &      &      &      \\
+    \addlinespace[0.2em]
+
+    Poor, nonpoor
+    & 0.9 & 0.8 & 4.7 & 5.9 & 8.8 & 9.5 & 10.2 & 11.5 & 11.3 \\
+    Std. Dev.
+    &     &     &     &     & 0.5 &     &     &     &     \\
+    \addlinespace[0.2em]
+
+    Nonpoor, poor
+    & 2.4 & 3.1 & 7.1 & 8.3 & 11.1 & 11.8 & 12.5 & 13.8 & 12.2 \\
+    Std. Dev.
+    &     &     &     &     & 0.5 &     &     &     &     \\
+    \addlinespace[0.2em]
+
+    Nonpoor, nonpoor
+    & 78.9 & 77.0 & 73.1 & 71.9 & 69.1 & 68.3 & 67.6 & 66.3 & 68.6 \\
+    Std. Dev.
+    &      &      &      &      & 0.8 &      &      &      &      \\
+    \midrule
+
+    N
+    & 5172 & 5172 & 5172 & 5172 & 10201 & 5172 & 5172 & 5172 & 5172 \\
+    \bottomrule
+\end{tabular}
+
+
+     \caption*{ \footnotesize \textbf{Note:}  This table illustrates that....}
+\end{table}
+
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics for households with a university-educated head}
+    \label{table3_2}
+    \begin{tabular}{lccccccccc}
+    \toprule
+    Poverty Status
+    & \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+    & \multicolumn{3}{c}{Parametric lower bound}
+    & \multicolumn{1}{c}{Truth}
+    & \multicolumn{3}{c}{Parametric upper bound}
+    & \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+    \cmidrule(lr){3-5} \cmidrule(lr){7-9}
+    & & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+    \midrule
+
+    Poor, poor
+    & 1.9 & 2.4 & 1.7 & 1.5 & 0.9 & 0.7 & 0.6 & 0.4 & 0.3 \\
+    Std. Dev.
+    &      &      &      &      & 0.4 &      &      &      &      \\
+    \addlinespace[0.2em]
+
+    Poor, nonpoor
+    & 0.0 & 0.1 & 0.8 & 1.0 & 1.6 & 1.8 & 1.9 & 2.1 & 1.8 \\
+    Std. Dev.
+    &     &     &     &     & 0.6 &     &     &     &     \\
+    \addlinespace[0.2em]
+
+    Nonpoor, poor
+    & 2.5 & 2.8 & 3.5 & 3.7 & 4.3 & 4.5 & 4.6 & 4.8 & 4.1 \\
+    Std. Dev.
+    &     &     &     &     & 0.9 &     &     &     &     \\
+    \addlinespace[0.2em]
+
+    Nonpoor, nonpoor
+    & 95.6 & 94.7 & 94.1 & 93.8 & 93.2 & 93.0 & 92.9 & 92.7 & 93.8 \\
+    Std. Dev.
+    &      &      &      &      & 1.1 &      &      &      &      \\
+    \midrule
+
+    N
+    & 664 & 664 & 664 & 664 & 1309 & 664 & 664 & 664 & 664 \\
+    \bottomrule
+\end{tabular}
+
+     \caption*{ \footnotesize \textbf{Note:}  This table illustrates that between 2019 and  2020 ....}
+\end{table}
+
+%\begin{table}[H]
+%	\small
+%	\tabcolsep=0.11cm
+%	\noindent\makebox[\textwidth]{
+%		\begin{tabular}{rccccccccc}
+%			وضعیت فقر               & حد ناپارامتریک       & \multicolumn{3}{c}{حد بالا - پارامتریک}                            & مقدار واقعی          & \multicolumn{3}{c}{حد پایین - پارامتریک}                           & حد ناپارامتریک       \\ \cline{3-5} \cline{7-9}
+%			&                      & حالت ۱               & حالت ۲               & حالت ۳               &                      & حالت ۳               & حالت ۲               & حالت ۱               &                      \\ \hline
+%			Poor, poor       & $3/4$                 & $4/1                 $& $5/2$                 & $5/8$                 & $5/2                   $& $8/8$                 & $9/8$                 & $12/4                 $& $10/6$                 \\
+%			Standard Deviation         &                      &                      &                      &                      & $0/6                  $&                      &                      &                      &                      \\
+%			Poor, nonpoor    & $8/2$                  & $8/6$& $7/5$                  & $6/8$                    & $3                 $& $3/8$                 & $2/8$                 & $0/3                 $& $0/1$                 \\
+%			Standard Deviation         &                      &                      &                      &                      & $0/5                  $&                      &                      &                      &                      \\
+%			Nonpoor, poor   & $11/4$                  & $15/4$& $14/3$                  & $13/7$                 & $9/3                 $& $10/7$                 & $9/7$                 & $7/1                 $& $4/1$                 \\
+%			Standard Deviation         &                      &                      &                      &                      & $0/8                  $&                      &                      &                      &                      \\
+%			Nonpoor, nonpoor & $77/1$                 & $71/9$& $73$                 & $73/7$                 & $82/5                 $& $76/7$                 & $77/7$                 & $80/2                 $& $85/1$                 \\
+%			Standard Deviation         &                      &                      &                      &                      & $1/1                  $&                      &                      &                      &                      \\
+%			\multicolumn{1}{l}{}    & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} \\\hline
+%			N           &651                 & 651& 651& 651& 1296& 651                 & 651                 & 651                 & 651                
+%	\end{tabular}}
+%	\caption{تخمین پویایی فقر برای خانوارهایی که سرپرست دارای تحصیلات دانشگاهی است.}
+%	\label{haveduc}
+%\end{table}
+
+Tables \autoref{table4} and \autoref{table5} present the poverty dynamics of urban and rural households separately. The results show that the probability of remaining in poverty is higher for rural households as compared to urban households. Additionally, the rate of poverty transition (moving into or out of poverty in 2020) is lower for urban households as compared to rural households. These findings suggest that rural households are disproportionately affected by poverty and may require targeted interventions to reduce poverty and improve economic mobility. The higher poverty transition rate and lower probability of remaining in poverty for urban households may be due to the greater economic opportunities and access to services in urban areas. Overall, these findings highlight the importance of considering the specific needs and challenges faced by rural households in poverty reduction policies and programs.
+
+
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics of urban households.}
+    \label{table4}
+ \begin{tabular}{lccccccccc}
+    \toprule
+    Poverty Status
+    & \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+    & \multicolumn{3}{c}{Parametric lower bound}
+    & \multicolumn{1}{c}{Truth}
+    & \multicolumn{3}{c}{Parametric upper bound}
+    & \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+    \cmidrule(lr){3-5} \cmidrule(lr){7-9}
+    & & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+    \midrule
+
+    Poor, poor
+    & 8.2 & 10.3 & 7.8 & 7.1 & 5.3 & 4.8 & 4.3 & 3.5 & 2.8 \\
+    Std. Dev.
+    &      &      &      &      & 0.5 &      &      &      &      \\
+    \addlinespace[0.2em]
+
+    Poor, nonpoor
+    & 0.8 & 0.7 & 3.1 & 3.9 & 5.6 & 6.2 & 6.7 & 7.5 & 7.8 \\
+    Std. Dev.
+    &     &     &     &     & 0.5 &     &     &     &     \\
+    \addlinespace[0.2em]
+
+    Nonpoor, poor
+    & 2.7 & 2.8 & 5.3 & 6.1 & 7.8 & 8.4 & 8.8 & 9.6 & 8.1 \\
+    Std. Dev.
+    &     &     &     &     & 0.6 &     &     &     &     \\
+    \addlinespace[0.2em]
+
+    Nonpoor, nonpoor
+    & 88.3 & 86.2 & 83.7 & 82.9 & 81.3 & 80.6 & 80.2 & 79.4 & 81.3 \\
+    Std. Dev.
+    &      &      &      &      & 0.8 &      &      &      &      \\
+    \midrule
+
+    N
+    & 2987 & 2987 & 2987 & 2987 & 5873 & 2987 & 2987 & 2987 & 2987 \\
+    \bottomrule
+\end{tabular}
+
+    
+    \vspace{0.5em} 
+    \begin{minipage}{\linewidth} 
+    \caption*{\scriptsize \textbf{Note:} This table illustrates that between 2019 and  2020....} 
+    \end{minipage}
+\end{table}
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics of rural households.}
+    \label{table5}
+  \begin{tabular}{lccccccccc}
+    \toprule
+    Poverty Status
+    & \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+    & \multicolumn{3}{c}{Parametric lower bound}
+    & \multicolumn{1}{c}{Truth}
+    & \multicolumn{3}{c}{Parametric upper bound}
+    & \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+    \cmidrule(lr){3-5} \cmidrule(lr){7-9}
+    & & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+    \midrule
+
+    Poor, poor
+    & 32.9 & 33.4 & 28.3 & 26.7 & 22.1 & 21.6 & 20.6 & 18.6 & 18.5 \\
+    Std. Dev.
+    &      &      &      &      & 0.8 &      &      &      &      \\
+    \addlinespace[0.2em]
+
+    Poor, nonpoor
+    & 0.6 & 1.0 & 6.1 & 7.7 & 12.1 & 12.7 & 13.8 & 15.8 & 15.8 \\
+    Std. Dev.
+    &     &     &     &     & 0.7 &     &     &     &     \\
+    \addlinespace[0.2em]
+
+    Nonpoor, poor
+    & 5.4 & 5.4 & 10.5 & 12.1 & 16.7 & 17.1 & 18.2 & 20.2 & 19.8 \\
+    Std. Dev.
+    &     &     &     &     & 0.9 &     &     &     &     \\
+    \addlinespace[0.2em]
+
+    Nonpoor, nonpoor
+    & 61.1 & 60.3 & 55.2 & 53.5 & 49.1 & 48.5 & 47.5 & 45.5 & 45.9 \\
+    Std. Dev.
+    &      &      &      &      & 1.0 &      &      &      &      \\
+    \midrule
+
+    N
+    & 2865 & 2865 & 2865 & 2865 & 5627 & 2865 & 2865 & 2865 & 2865 \\
+    \bottomrule
+\end{tabular}
+
+    \caption*{\scriptsize \textbf{Note:} This table illustrates that between 2019 and  2020....}  
+\end{table}
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics for all rural and urban households}
+    \label{all_99_1400}
+    \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 17.9 & 18.7 & 15.2 & 14.0 & 11.0 & 10.7 & 10.0 & 8.7 & 8.6 \\
+Std. Dev.
+&      &      &      &      & 0.4 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 0.9 & 1.0 & 4.5 & 5.7 & 8.7 & 9.0 & 9.7 & 11.0 & 10.8 \\
+Std. Dev.
+&     &     &     &     & 0.5 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 3.2 & 3.5 & 7.0 & 8.1 & 11.1 & 11.5 & 12.2 & 13.4 & 12.6 \\
+Std. Dev.
+&     &     &     &     & 0.6 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 78.0 & 76.8 & 73.3 & 72.2 & 69.2 & 68.8 & 68.1 & 66.9 & 68.1 \\
+Std. Dev.
+&      &      &      &      & 0.7 &      &      &      &      \\
+\midrule
+
+N
+& 5593 & 5593 & 5593 & 5593 & 11142 & 5593 & 5593 & 5593 & 5593 \\
+\bottomrule
+\end{tabular}
+
+    \caption*{\scriptsize \textbf{Note:} 1399-1400.}
+\end{table}
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics for female-headed households.}
+    \label{fh_99_1400}
+    \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 16.9 & 21.2 & 18.7 & 17.8 & 15.5 & 14.7 & 14.1 & 12.9 & 11.9 \\
+Std. Dev.
+&      &      &      &      & 1.4 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 4.8 & 3.9 & 6.3 & 7.3 & 9.7 & 10.4 & 11.0 & 12.2 & 12.7 \\
+Std. Dev.
+&     &     &     &     & 1.8 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 5.2 & 4.8 & 7.3 & 8.2 & 10.5 & 11.3 & 11.9 & 13.1 & 10.2 \\
+Std. Dev.
+&     &     &     &     & 1.6 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 73.1 & 70.1 & 67.7 & 66.7 & 64.3 & 63.6 & 63.0 & 61.8 & 65.2 \\
+Std. Dev.
+&      &      &      &      & 2.4 &      &      &      &      \\
+\midrule
+
+N
+& 459 & 459 & 459 & 459 & 874 & 459 & 459 & 459 & 459 \\
+\bottomrule
+\end{tabular}
+
+    \caption*{\scriptsize \textbf{Note:} 1399-1400.}
+\end{table}
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics for households whose head lacks university education.}
+    \label{no_educ_99_1400}
+    \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 19.9 & 21.5 & 17.5 & 16.2 & 12.7 & 12.4 & 11.6 & 10.1 & 9.9 \\
+Std. Dev.
+&      &      &      &      & 0.5 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 1.2 & 1.1 & 5.1 & 6.4 & 9.9 & 10.3 & 11.0 & 12.5 & 12.5 \\
+Std. Dev.
+&     &     &     &     & 0.6 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 3.7 & 3.8 & 7.8 & 9.1 & 12.6 & 12.9 & 13.7 & 15.1 & 13.7 \\
+Std. Dev.
+&     &     &     &     & 0.6 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 75.3 & 73.6 & 69.6 & 68.3 & 64.8 & 64.5 & 63.7 & 62.2 & 63.9 \\
+Std. Dev.
+&      &      &      &      & 0.9 &      &      &      &      \\
+\midrule
+
+N
+& 4969 & 4969 & 4969 & 4969 & 9785 & 4969 & 4969 & 4969 & 4969 \\
+\bottomrule
+\end{tabular}
+
+     \caption*{\scriptsize \textbf{Note:} 1399-1400.}
+\end{table}
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{ Poverty dynamics for households with a university-educated head}
+    \label{with_educ_99_1400}
+    \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 2.0 & 2.8 & 2.1 & 1.8 & 1.1 & 1.0 & 0.9 & 0.6 & 0.5 \\
+Std. Dev.
+&      &      &      &      & 0.4 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 0.3 & 0.3 & 1.0 & 1.3 & 1.9 & 2.0 & 2.2 & 2.4 & 2.3 \\
+Std. Dev.
+&     &     &     &     & 0.6 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 2.5 & 2.8 & 3.6 & 3.8 & 4.5 & 4.6 & 4.8 & 5.0 & 4.0 \\
+Std. Dev.
+&     &     &     &     & 1.0 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 95.2 & 94.1 & 93.4 & 93.1 & 92.4 & 92.3 & 92.2 & 91.9 & 93.2 \\
+Std. Dev.
+&      &      &      &      & 1.2 &      &      &      &      \\
+\midrule
+
+N
+& 664 & 664 & 664 & 664 & 1346 & 664 & 664 & 664 & 664 \\
+\bottomrule
+\end{tabular}
+
+        \caption*{\scriptsize \textbf{Note:} 1399-1400.}
+\end{table}
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics of urban households.}
+    \label{urban_1399_1400}
+   \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 10.4 & 12.1 & 9.5 & 8.6 & 6.3 & 6.0 & 5.5 & 4.5 & 4.0 \\
+Std. Dev.
+&      &      &      &      & 0.5 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 1.4 & 1.3 & 3.9 & 4.8 & 7.1 & 7.4 & 7.9 & 8.8 & 9.1 \\
+Std. Dev.
+&     &     &     &     & 0.6 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 2.5 & 3.0 & 5.6 & 6.5 & 8.8 & 9.1 & 9.6 & 10.5 & 8.9 \\
+Std. Dev.
+&     &     &     &     & 0.6 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 85.7 & 83.7 & 81.0 & 80.1 & 77.8 & 77.5 & 77.0 & 76.1 & 78.0 \\
+Std. Dev.
+&      &      &      &      & 0.8 &      &      &      &      \\
+\midrule
+
+N
+& 2865 & 2865 & 2865 & 2865 & 5616 & 2865 & 2865 & 2865 & 2865 \\
+\bottomrule
+\end{tabular}
+
+            \caption*{\scriptsize \textbf{Note:} 1399-1400.}
+\end{table}
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics of rural households}
+    \label{rural_1399_1400}
+   \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 36.5 & 36.3 & 31.3 & 29.6 & 24.4 & 24.4 & 23.3 & 21.2 & 21.9 \\
+Std. Dev.
+&      &      &      &      & 0.8 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 2.6 & 2.5 & 7.5 & 9.2 & 14.2 & 14.4 & 15.5 & 17.6 & 17.2 \\
+Std. Dev.
+&     &     &     &     & 0.8 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 4.5 & 4.4 & 9.4 & 11.1 & 16.2 & 16.3 & 17.4 & 19.5 & 19.1 \\
+Std. Dev.
+&     &     &     &     & 0.8 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 56.4 & 56.8 & 51.8 & 50.1 & 45.1 & 44.9 & 43.8 & 41.7 & 41.8 \\
+Std. Dev.
+&      &      &      &      & 1.0 &      &      &      &      \\
+\midrule
+
+N
+& 2832 & 2832 & 2832 & 2832 & 5526 & 2832 & 2832 & 2832 & 2832 \\
+\bottomrule
+\end{tabular}
+
+            \caption*{\scriptsize \textbf{Note:} 1399-1400.}
+\end{table}
+
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{ Poverty dynamics for all rural and urban households}
+    \label{all_1400-1401}
+   \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 17.0 & 18.0 & 14.4 & 13.3 & 9.7 & 9.9 & 9.2 & 8.0 & 7.8 \\
+Std. Dev.
+&      &      &      &      & 0.4 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 3.3 & 3.3 & 7.0 & 8.1 & 11.6 & 11.4 & 12.1 & 13.3 & 13.1 \\
+Std. Dev.
+&     &     &     &     & 0.6 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 0.6 & 0.9 & 4.5 & 5.7 & 9.2 & 9.0 & 9.7 & 10.9 & 9.7 \\
+Std. Dev.
+&     &     &     &     & 0.5 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 79.1 & 77.7 & 74.1 & 73.0 & 69.5 & 69.6 & 69.0 & 67.7 & 69.3 \\
+Std. Dev.
+&      &      &      &      & 0.7 &      &      &      &      \\
+\midrule
+
+N
+& 5582 & 5582 & 5582 & 5582 & 11008 & 5582 & 5582 & 5582 & 5582 \\
+\bottomrule
+\end{tabular}
+
+    \caption*{\scriptsize \textbf{Note:} 1400-1401.}
+\end{table}
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics for female-headed households.}
+    \label{fh_1400_1401}
+    \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 21.6 & 21.9 & 19.3 & 18.2 & 15.2 & 15.0 & 14.3 & 13.1 & 12.5 \\
+Std. Dev.
+&      &      &      &      & 1.6 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 7.3 & 7.1 & 9.7 & 10.8 & 13.7 & 14.0 & 14.7 & 15.9 & 16.0 \\
+Std. Dev.
+&     &     &     &     & 2.0 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 1.4 & 1.7 & 4.4 & 5.4 & 8.4 & 8.6 & 9.3 & 10.6 & 10.4 \\
+Std. Dev.
+&     &     &     &     & 1.7 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 69.7 & 69.3 & 66.6 & 65.6 & 62.6 & 62.4 & 61.7 & 60.4 & 61.0 \\
+Std. Dev.
+&      &      &      &      & 2.5 &      &      &      &      \\
+\midrule
+
+N
+& 439 & 439 & 439 & 439 & 849 & 439 & 439 & 439 & 439 \\
+\bottomrule
+\end{tabular}
+
+      \caption*{\scriptsize \textbf{Note:} 1400-1401.}
+\end{table}
+
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics for households whose head lacks university education}
+    \label{no_educ_1400_1401}
+   \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 18.0 & 19.8 & 16.1 & 14.9 & 10.8 & 11.2 & 10.4 & 9.0 & 8.6 \\
+Std. Dev.
+&      &      &      &      & 0.5 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 5.0 & 4.9 & 8.7 & 9.9 & 13.9 & 13.6 & 14.4 & 15.7 & 15.8 \\
+Std. Dev.
+&     &     &     &     & 0.7 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 0.5 & 0.5 & 4.2 & 5.5 & 9.4 & 9.2 & 9.9 & 11.3 & 10.0 \\
+Std. Dev.
+&     &     &     &     & 0.6 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 76.4 & 74.7 & 71.0 & 69.8 & 65.8 & 66.1 & 65.3 & 63.9 & 65.7 \\
+Std. Dev.
+&      &      &      &      & 0.8 &      &      &      &      \\
+\midrule
+
+N
+& 4871 & 4871 & 4871 & 4871 & 9650 & 4871 & 4871 & 4871 & 4871 \\
+\bottomrule
+\end{tabular}
+
+          \caption*{\scriptsize \textbf{Note:} 1400-1401.}
+\end{table}
+
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{ Poverty dynamics for households with a university-educated head}
+    \label{have_educ_1400_1401}
+   \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 2.9 & 3.9 & 2.8 & 2.4 & 1.5 & 1.4 & 1.2 & 0.9 & 0.9 \\
+Std. Dev.
+&      &      &      &      & 0.5 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 0.6 & 1.0 & 2.1 & 2.4 & 3.4 & 3.4 & 3.6 & 4.0 & 3.5 \\
+Std. Dev.
+&     &     &     &     & 0.8 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 0.7 & 2.0 & 3.1 & 3.5 & 4.4 & 4.5 & 4.7 & 5.0 & 2.8 \\
+Std. Dev.
+&     &     &     &     & 0.9 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 95.7 & 93.1 & 92.0 & 91.7 & 90.7 & 90.6 & 90.5 & 90.1 & 92.8 \\
+Std. Dev.
+&      &      &      &      & 1.2 &      &      &      &      \\
+\midrule
+
+N
+& 720 & 720 & 720 & 720 & 1362 & 720 & 720 & 720 & 720 \\
+\bottomrule
+\end{tabular}
+
+      \caption*{\scriptsize \textbf{Note:} 1400-1401.}
+\end{table}
+
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics of urban households.}
+    \label{urban_1400_1401}
+    \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 9.5 & 11.7 & 8.9 & 8.0 & 5.3 & 5.4 & 4.8 & 3.9 & 3.3 \\
+Std. Dev.
+&      &      &      &      & 0.5 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 3.1 & 2.7 & 5.6 & 6.5 & 9.2 & 9.1 & 9.6 & 10.6 & 10.7 \\
+Std. Dev.
+&     &     &     &     & 0.7 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 0.9 & 1.3 & 4.1 & 5.0 & 7.6 & 7.6 & 8.2 & 9.1 & 7.1 \\
+Std. Dev.
+&     &     &     &     & 0.7 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 86.5 & 84.3 & 81.4 & 80.5 & 78.0 & 77.9 & 77.4 & 76.5 & 78.9 \\
+Std. Dev.
+&      &      &      &      & 0.9 &      &      &      &      \\
+\midrule
+
+N
+& 2845 & 2845 & 2845 & 2845 & 5601 & 2845 & 2845 & 2845 & 2845 \\
+\bottomrule
+\end{tabular}
+
+        \caption*{\scriptsize \textbf{Note:} 1400-1401.}
+\end{table}
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics of rural households.}
+    \label{rural_1400_1401}
+    \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 35.9 & 34.6 & 29.6 & 27.9 & 21.9 & 22.7 & 21.6 & 19.6 & 20.7 \\
+Std. Dev.
+&      &      &      &      & 0.8 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 5.8 & 5.6 & 10.6 & 12.3 & 18.3 & 17.5 & 18.5 & 20.6 & 19.7 \\
+Std. Dev.
+&     &     &     &     & 0.9 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 1.7 & 1.5 & 6.5 & 8.2 & 14.0 & 13.3 & 14.4 & 16.5 & 17.0 \\
+Std. Dev.
+&     &     &     &     & 0.8 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 56.6 & 58.3 & 53.3 & 51.6 & 45.8 & 46.5 & 45.4 & 43.3 & 42.6 \\
+Std. Dev.
+&      &      &      &      & 1.0 &      &      &      &      \\
+\midrule
+
+N
+& 2754 & 2754 & 2754 & 2754 & 5402 & 2754 & 2754 & 2754 & 2754 \\
+\bottomrule
+\end{tabular}
+
+       \caption*{\scriptsize \textbf{Note:} 1400-1401.}
+\end{table}
+
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{ Poverty dynamics for all rural and urban households}
+    \label{all_1401_1402}
+   \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 11.1 & 12.9 & 10.7 & 9.9 & 7.4 & 7.3 & 6.8 & 5.8 & 5.4 \\
+Std. Dev.
+&      &      &      &      & 0.4 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 5.8 & 6.1 & 8.3 & 9.2 & 11.7 & 11.8 & 12.3 & 13.3 & 13.3 \\
+Std. Dev.
+&     &     &     &     & 0.6 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 0.6 & 0.7 & 2.8 & 3.7 & 6.2 & 6.3 & 6.8 & 7.8 & 6.3 \\
+Std. Dev.
+&     &     &     &     & 0.4 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 82.5 & 80.3 & 78.1 & 77.3 & 74.7 & 74.6 & 74.1 & 73.1 & 75.0 \\
+Std. Dev.
+&      &      &      &      & 0.7 &      &      &      &      \\
+\midrule
+
+N
+& 5448 & 5448 & 5448 & 5448 & 10755 & 5448 & 5448 & 5448 & 5448 \\
+\bottomrule
+\end{tabular}
+
+       \caption*{\scriptsize \textbf{Note:} 1401-1402.}
+\end{table}
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics for female-headed households}
+    \label{fh_1401_1402}
+    \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 14.8 & 15.2 & 13.1 & 12.3 & 10.4 & 9.7 & 9.2 & 8.2 & 8.2 \\
+Std. Dev.
+&      &      &      &      & 1.3 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 9.3 & 6.5 & 8.6 & 9.4 & 11.3 & 12.0 & 12.5 & 13.5 & 12.9 \\
+Std. Dev.
+&     &     &     &     & 1.7 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 2.1 & 1.9 & 4.0 & 4.8 & 6.8 & 7.4 & 7.9 & 8.9 & 8.7 \\
+Std. Dev.
+&     &     &     &     & 1.4 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 73.9 & 76.4 & 74.3 & 73.5 & 71.5 & 70.9 & 70.4 & 69.4 & 70.2 \\
+Std. Dev.
+&      &      &      &      & 2.2 &      &      &      &      \\
+\midrule
+
+N
+& 460 & 460 & 460 & 460 & 880 & 460 & 460 & 460 & 460 \\
+\bottomrule
+\end{tabular}
+
+    \caption*{\scriptsize \textbf{Note:} 1401-1402.}
+\end{table}
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{ Poverty dynamics for households whose head lacks university educa-
+tion}
+    \label{no_educ_1401_1402}
+   \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 13.0 & 14.9 & 12.5 & 11.5 & 8.6 & 8.5 & 7.9 & 6.8 & 6.5 \\
+Std. Dev.
+&      &      &      &      & 0.4 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 6.5 & 6.8 & 9.3 & 10.3 & 13.2 & 13.3 & 13.9 & 15.0 & 14.8 \\
+Std. Dev.
+&     &     &     &     & 0.6 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 0.4 & 0.5 & 3.0 & 3.9 & 6.8 & 6.9 & 7.6 & 8.7 & 7.0 \\
+Std. Dev.
+&     &     &     &     & 0.5 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 80.0 & 77.7 & 75.3 & 74.3 & 71.4 & 71.3 & 70.7 & 69.6 & 71.7 \\
+Std. Dev.
+&      &      &      &      & 0.8 &      &      &      &      \\
+\midrule
+
+N
+& 4789 & 4789 & 4789 & 4789 & 9416 & 4789 & 4789 & 4789 & 4789 \\
+\bottomrule
+\end{tabular}
+
+     \caption*{\scriptsize \textbf{Note:} 1401-1402.}
+\end{table}
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{ Poverty dynamics for households with a university-educated head}
+    \label{with_educ_1401_1402}
+    \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 1.8 & 2.2 & 1.6 & 1.3 & 0.7 & 0.7 & 0.6 & 0.4 & 0.2 \\
+Std. Dev.
+&      &      &      &      & 0.4 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 1.1 & 1.9 & 2.6 & 2.8 & 3.4 & 3.4 & 3.5 & 3.7 & 3.6 \\
+Std. Dev.
+&     &     &     &     & 0.8 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 0.3 & 0.6 & 1.3 & 1.5 & 2.0 & 2.1 & 2.2 & 2.4 & 1.9 \\
+Std. Dev.
+&     &     &     &     & 0.7 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 96.8 & 95.3 & 94.6 & 94.4 & 93.9 & 93.7 & 93.6 & 93.4 & 94.3 \\
+Std. Dev.
+&      &      &      &      & 1.1 &      &      &      &      \\
+\midrule
+
+N
+& 689 & 689 & 689 & 689 & 1348 & 689 & 689 & 689 & 689 \\
+\bottomrule
+\end{tabular}
+
+         \caption*{\scriptsize \textbf{Note:} 1401-1402.}
+\end{table}
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics of urban households.}
+    \label{urban_1401_1402}
+   \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 5.2 & 7.8 & 6.2 & 5.6 & 3.8 & 3.7 & 3.3 & 2.7 & 1.8 \\
+Std. Dev.
+&      &      &      &      & 0.4 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 5.0 & 5.4 & 6.9 & 7.6 & 9.3 & 9.4 & 9.8 & 10.5 & 11.0 \\
+Std. Dev.
+&     &     &     &     & 0.7 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 0.3 & 0.4 & 1.9 & 2.6 & 4.3 & 4.4 & 4.8 & 5.5 & 3.7 \\
+Std. Dev.
+&     &     &     &     & 0.5 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 89.5 & 86.5 & 84.9 & 84.3 & 82.6 & 82.5 & 82.1 & 81.4 & 83.5 \\
+Std. Dev.
+&      &      &      &      & 0.8 &      &      &      &      \\
+\midrule
+
+N
+& 2834 & 2834 & 2834 & 2834 & 5526 & 2834 & 2834 & 2834 & 2834 \\
+\bottomrule
+\end{tabular}
+
+            \caption*{\scriptsize \textbf{Note:} 1401-1402.}
+\end{table}
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics of rural households.}
+    \label{rural_1401_1402}
+    \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 27.0 & 27.0 & 23.5 & 22.1 & 17.5 & 17.6 & 16.7 & 14.8 & 15.2 \\
+Std. Dev.
+&      &      &      &      & 0.8 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 10.0 & 9.0 & 12.5 & 13.9 & 18.5 & 18.4 & 19.3 & 21.2 & 20.8 \\
+Std. Dev.
+&     &     &     &     & 0.9 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 1.1 & 1.4 & 4.9 & 6.3 & 10.9 & 10.8 & 11.8 & 13.6 & 12.9 \\
+Std. Dev.
+&     &     &     &     & 0.7 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 61.8 & 62.6 & 59.1 & 57.7 & 53.1 & 53.2 & 52.2 & 50.4 & 51.0 \\
+Std. Dev.
+&      &      &      &      & 1.0 &      &      &      &      \\
+\midrule
+
+N
+& 2665 & 2665 & 2665 & 2665 & 5226 & 2665 & 2665 & 2665 & 2665 \\
+\bottomrule
+\end{tabular}
+
+              \caption*{\scriptsize \textbf{Note:} 1401-1402.}
+\end{table}
+
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{ Poverty dynamics for all rural and urban households}
+    \label{all_1402_1403}
+    \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 9.9 & 11.1 & 8.5 & 7.7 & 6.0 & 5.5 & 5.1 & 4.3 & 4.1 \\
+Std. Dev.
+&      &      &      &      & 0.3 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 1.5 & 1.9 & 4.5 & 5.2 & 7.0 & 7.5 & 7.9 & 8.7 & 8.4 \\
+Std. Dev.
+&     &     &     &     & 0.4 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 0.6 & 0.9 & 3.4 & 4.2 & 6.0 & 6.5 & 6.9 & 7.7 & 6.4 \\
+Std. Dev.
+&     &     &     &     & 0.4 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 88.0 & 86.2 & 83.6 & 82.8 & 81.0 & 80.6 & 80.1 & 79.3 & 81.1 \\
+Std. Dev.
+&      &      &      &      & 0.6 &      &      &      &      \\
+\midrule
+
+N
+& 5337 & 5337 & 5337 & 5337 & 10546 & 5337 & 5337 & 5337 & 5337 \\
+\bottomrule
+\end{tabular}
+
+      \caption*{\scriptsize \textbf{Note:} 1402-1403.}
+\end{table}
+
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{ Poverty dynamics for female-headed households}
+    \label{fh_1402_1403}
+    \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 11.7 & 13.4 & 11.0 & 10.2 & 8.6 & 7.7 & 7.3 & 6.4 & 5.7 \\
+Std. Dev.
+&      &      &      &      & 1.1 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 3.0 & 3.8 & 6.2 & 7.0 & 8.8 & 9.5 & 10.0 & 10.8 & 10.7 \\
+Std. Dev.
+&     &     &     &     & 1.7 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 0.9 & 1.2 & 3.6 & 4.4 & 6.0 & 6.9 & 7.4 & 8.3 & 6.9 \\
+Std. Dev.
+&     &     &     &     & 1.4 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 84.4 & 81.6 & 79.2 & 78.4 & 76.6 & 75.9 & 75.4 & 74.5 & 76.7 \\
+Std. Dev.
+&      &      &      &      & 2.2 &      &      &      &      \\
+\midrule
+
+N
+& 477 & 477 & 477 & 477 & 876 & 477 & 477 & 477 & 477 \\
+\bottomrule
+\end{tabular}
+
+          \caption*{\scriptsize \textbf{Note:} 1402-1403.}
+\end{table}
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics for households whose head lacks university education}
+    \label{no_educ_1402_1403}
+    \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 11.7 & 13.1 & 9.9 & 9.0 & 6.9 & 6.3 & 5.8 & 4.9 & 4.9 \\
+Std. Dev.
+&      &      &      &      & 0.4 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 1.7 & 2.1 & 5.3 & 6.2 & 8.3 & 8.9 & 9.4 & 10.3 & 9.8 \\
+Std. Dev.
+&     &     &     &     & 0.5 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 0.7 & 0.6 & 3.8 & 4.7 & 6.8 & 7.4 & 7.9 & 8.8 & 7.5 \\
+Std. Dev.
+&     &     &     &     & 0.5 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 85.9 & 84.2 & 81.0 & 80.1 & 78.1 & 77.4 & 76.9 & 76.0 & 77.8 \\
+Std. Dev.
+&      &      &      &      & 0.7 &      &      &      &      \\
+\midrule
+
+N
+& 4684 & 4684 & 4684 & 4684 & 9181 & 4684 & 4684 & 4684 & 4684 \\
+\bottomrule
+\end{tabular}
+
+         \caption*{\scriptsize \textbf{Note:} 1402-1403.}
+\end{table}
+
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{ Poverty dynamics for households with a university-educated head}
+    \label{with_educ_1402_1403}
+   \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 1.4 & 1.4 & 0.9 & 0.8 & 0.5 & 0.4 & 0.3 & 0.2 & 0.2 \\
+Std. Dev.
+&      &      &      &      & 0.3 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 0.4 & 0.5 & 1.0 & 1.2 & 1.5 & 1.6 & 1.6 & 1.7 & 1.6 \\
+Std. Dev.
+&     &     &     &     & 0.5 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 0.4 & 0.7 & 1.2 & 1.4 & 1.7 & 1.8 & 1.9 & 2.0 & 1.5 \\
+Std. Dev.
+&     &     &     &     & 0.6 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 97.9 & 97.3 & 96.8 & 96.7 & 96.4 & 96.3 & 96.2 & 96.1 & 96.6 \\
+Std. Dev.
+&      &      &      &      & 0.8 &      &      &      &      \\
+\midrule
+
+N
+& 698 & 698 & 698 & 698 & 1385 & 698 & 698 & 698 & 698 \\
+\bottomrule
+\end{tabular}
+
+        \caption*{\scriptsize \textbf{Note:} 1402-1403.}
+\end{table}
+
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{ Poverty dynamics of urban households.}
+    \label{urban_1402_1403}
+   \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 4.6 & 6.2 & 4.4 & 3.9 & 2.8 & 2.4 & 2.2 & 1.7 & 1.4 \\
+Std. Dev.
+&      &      &      &      & 0.4 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 1.4 & 1.8 & 3.5 & 4.0 & 5.1 & 5.5 & 5.8 & 6.2 & 6.2 \\
+Std. Dev.
+&     &     &     &     & 0.5 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 0.6 & 0.6 & 2.4 & 2.9 & 4.0 & 4.4 & 4.6 & 5.1 & 3.8 \\
+Std. Dev.
+&     &     &     &     & 0.5 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 93.5 & 91.4 & 89.7 & 89.2 & 88.0 & 87.7 & 87.4 & 87.0 & 88.7 \\
+Std. Dev.
+&      &      &      &      & 0.7 &      &      &      &      \\
+\midrule
+
+N
+& 2743 & 2743 & 2743 & 2743 & 5471 & 2743 & 2743 & 2743 & 2743 \\
+\bottomrule
+\end{tabular}
+
+     \caption*{\scriptsize \textbf{Note:} 1402-1403.}
+\end{table}
+
+
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \caption{Poverty dynamics of rural households.}
+    \label{rural_1402_1403}
+   \begin{tabular}{lccccccccc}
+\toprule
+Poverty Status
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}}
+& \multicolumn{3}{c}{Parametric lower bound}
+& \multicolumn{1}{c}{Truth}
+& \multicolumn{3}{c}{Parametric upper bound}
+& \multicolumn{1}{c}{\shortstack{Nonparametric\\bound}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){7-9}
+& & Spec. 1 & Spec. 2 & Spec. 3 & & Spec. 3 & Spec. 2 & Spec. 1 & \\
+\midrule
+
+Poor, poor
+& 24.4 & 24.6 & 20.1 & 18.7 & 15.1 & 14.6 & 13.7 & 12.1 & 12.3 \\
+Std. Dev.
+&      &      &      &      & 0.8 &      &      &      &      \\
+\addlinespace
+
+Poor, nonpoor
+& 2.5 & 2.5 & 7.0 & 8.4 & 12.0 & 12.6 & 13.5 & 15.1 & 14.6 \\
+Std. Dev.
+&     &     &     &     & 0.8 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, poor
+& 1.9 & 2.1 & 6.6 & 8.0 & 11.6 & 12.2 & 13.0 & 14.6 & 13.9 \\
+Std. Dev.
+&     &     &     &     & 0.7 &     &     &     &     \\
+\addlinespace
+
+Nonpoor, nonpoor
+& 71.3 & 70.8 & 66.3 & 64.9 & 61.3 & 60.7 & 59.8 & 58.2 & 59.2 \\
+Std. Dev.
+&      &      &      &      & 1.0 &      &      &      &      \\
+\midrule
+
+N
+& 2578 & 2578 & 2578 & 2578 & 5082 & 2578 & 2578 & 2578 & 2578 \\
+\bottomrule
+\end{tabular}
+
+    \caption*{\scriptsize \textbf{Note:} 1402-1403.}
+\end{table}
+
+\section{Robustness Checks}
+ 
+\section{Potential Mechanisms}
+The observed patterns in poverty dynamics - particularly the higher rates of chronic poverty among female-headed, less-educated, and rural households - can be understood through several interrelated economic and sociological mechanisms, grounded in the literature on poverty traps and vulnerability.
+\textcolor{red}{we need  a histogram for non-labor earnings of households based on the households with higher and less than diploma educated heads and the household head's gender for two distinct years. }
+First, the asset-based poverty trap framework, articulated by \citet{barrett2008poverty}, provides a foundational explanation. Households with limited initial endowments of physical, financial, or human capital may fall below a critical threshold, preventing investment in income - generating activities and locking them into persistent poverty. This mechanism is evident in our findings: households headed by individuals without university education lack the human capital necessary to access stable, formal - sector employment, consistent with the human capital theory of poverty \citep{schultz1961investment}. This lack of education constrains occupational mobility and resilience to economic shocks, as noted in studies from developing contexts \citep{behrman1999labor}.
+
+Second, structural and labor market inequalities drive the gendered and spatial dimensions of our results. Female - headed households face a compounded disadvantage due to occupational segregation, wage discrimination, and the disproportionate burden of unpaid care work \citep{worldbank2012world}. Their overrepresentation in the informal sector, characterized by low pay and job insecurity \citep{ilostat2020women}, limits their capacity to accumulate savings or assets, increasing vulnerability to chronic poverty. This aligns with feminist political economy critiques that highlight how labor markets reproduce gendered poverty \citep{elson1999male}.
+
+Third, the stark rural - urban divide can be attributed to spatial poverty traps. Rural households often depend on climate-sensitive agriculture, face higher transportation costs, and have limited access to financial services, quality education, and non-farm employment \citep{jalan2002geographic}. This geographic disadvantage is exacerbated by infrastructure deficits and public service concentration in urban areas, a common feature in middle-income countries \citep{kanbur2014urbanization}. The lower mobility out of poverty in rural areas reflects this structural constraint on economic diversification and opportunity.
+
+Fourth, the broader macroeconomic and institutional context of Iran during the study period (2019–2020) serves as a critical precipitating mechanism. The confluence of stringent economic sanctions and the COVID-19 pandemic induced severe inflationary pressures, currency depreciation, and contraction in formal employment \citep{amid2021sanctions}. Such macroeconomic shocks disproportionately affect the most vulnerable groups—those with precarious employment, limited savings, and less diversified income sources—pushing transient poor households into chronic poverty and making escape more difficult for those already poor \citep{dercon2005vulnerability}. The shock likely eroded the modest gains of those near the poverty line, a phenomenon documented in other crisis settings \citep{hallegatte2016shock}.
+
+Finally, the limited mobility observed, especially among the vulnerable subgroups, may reflect weak social protection systems. Effective safety nets and active labor market policies can mitigate shocks and facilitate poverty exits \citep{barrientos2011social}. The insufficiency or limited coverage of such programs in Iran during this period may have left households exposed to income volatility without adequate buffers, reinforcing chronic poverty \citep{moradi2021welfare}.
+
+In summary, the mechanisms driving our results are multifaceted, operating at the intersection of individual human capital deficits, structural market inequalities, geographic disparities, and adverse macroeconomic shocks. These factors interact to create and sustain the poverty traps evident in the data, particularly for the most marginalized segments of Iranian society.
+
+\section{Conclusion}
+In this research, we have presented a method for estimating poverty dynamics in the absence of suitable panel data. Specifically, we have employed the synthetic panel model proposed by \cite{dang2014using}. to estimate the first-round consumption of households surveyed in the second round. We have applied this method to data from the Expenditures and Income Survey (HIES) for the years 2019 and 2020 in Iran, which is a period of particular significance due to the COVID-19 pandemic and US sanctions. Our results indicate that a significant proportion of households, particularly female-headed households, households with non-university educated heads, and rural households, are trapped in chronic poverty. Furthermore, we have also found that the estimates of poverty dynamics obtained from our synthetic panel model are in close agreement with those obtained from true panel data, demonstrating the validity and usefulness of this approach. Overall, this research highlights the importance of measuring poverty dynamics, which can provide valuable information for the design and implementation of poverty reduction policies.
+
+
+
+
+\newpage
+\bibliographystyle{chicago-fa}
+\bibliography{myref.bib}
+\end{document}
