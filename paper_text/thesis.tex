@@ -1814,7 +1814,46 @@ N
 \end{table}
 
 \section{Robustness Checks}
- 
+
+\subsection{Composition Stability of the Synthetic Cohort}
+A key assumption in the synthetic-panel approach is that the two repeated cross-sections are drawn from comparable underlying populations. As a first diagnostic, we compare the weighted composition of the all-household sample used for the 1398-1399 estimates. The age window is aligned across rounds by comparing household heads aged 25--55 in 1398 with heads aged 26--56 in 1399. Figures \ref{fig:population-stability-age} and \ref{fig:population-stability-education} show that the weighted distributions of aligned head age groups and head education are broadly stable across the two survey rounds.
+
+\begin{figure}[H]
+    \centering
+    \caption{Weighted Distribution of Aligned Household-Head Age Groups, 1398-1399}
+    \includegraphics[width=0.85\linewidth]
+    {Figures/population_stability_9899_age_barplot.pdf}
+    \caption*{\scriptsize \textbf{Note:} The sample follows the all-household 1398-1399 specification. The 1399 head age is shifted back by one year to align the synthetic cohort with 1398.}
+    \label{fig:population-stability-age}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Weighted Distribution of Household-Head Education, 1398-1399}
+    \includegraphics[width=0.85\linewidth]{Figures/population_stability_9899_education_barplot.pdf}
+    \caption*{\scriptsize \textbf{Note:} Bars report weighted shares for the all-household age-aligned sample.}
+    \label{fig:population-stability-education}
+\end{figure}
+
+\subsection{Residual Normality in the Consumption Models}
+The parametric version of the synthetic-panel estimator relies on a distributional approximation for the regression errors. Following \citet{dang2014using}, we visually assess this assumption by comparing residuals from the all-household 1398 and 1399 consumption regressions with fitted normal densities. Figures \ref{fig:residual-normality-1398} and \ref{fig:residual-normality-1399} show the two diagnostic plots separately so that the residual distributions can be inspected more clearly.
+
+\begin{figure}[H]
+    \centering
+    \caption{OLS Residuals and Fitted Normal Density, 1398}
+    \includegraphics[width=0.85\linewidth]{Figures/residuals_1398_normality.pdf}
+    \caption*{\scriptsize \textbf{Note:} Residuals are from the unweighted all-household OLS consumption model used for the 1398-1399 synthetic-panel estimates. The displayed density is weighted by HIES survey weights.}
+    \label{fig:residual-normality-1398}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{OLS Residuals and Fitted Normal Density, 1399}
+    \includegraphics[width=0.85\linewidth]{Figures/residuals_1399_normality.pdf}
+    \caption*{\scriptsize \textbf{Note:} Residuals are from the unweighted all-household OLS consumption model used for the 1398-1399 synthetic-panel estimates. The displayed density is weighted by HIES survey weights.}
+    \label{fig:residual-normality-1399}
+\end{figure}
+
 \section{Potential Mechanisms}
 The observed patterns in poverty dynamics - particularly the higher rates of chronic poverty among female-headed, less-educated, and rural households - can be understood through several interrelated economic and sociological mechanisms, grounded in the literature on poverty traps and vulnerability.
 \textcolor{red}{we need  a histogram for non-labor earnings of households based on the households with higher and less than diploma educated heads and the household head's gender for two distinct years. }

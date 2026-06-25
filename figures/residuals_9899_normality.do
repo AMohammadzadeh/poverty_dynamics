@@ -114,6 +114,8 @@ twoway ///
     legend(order(1 "Weighted histogram" 2 "Fitted normal density") rows(2) region(lstyle(none))) ///
     graphregion(color(white)) plotregion(color(white)) ///
     name(resid98, replace)
+graph export "$output_dir\residuals_1398_normality.pdf", replace
+graph export "$output_dir\residuals_1398_normality.png", width(1800) replace
 graph save "$output_dir\residuals_1398_normality.gph", replace
 
 use "`h99'", clear
@@ -128,17 +130,9 @@ twoway ///
     legend(order(1 "Weighted histogram" 2 "Fitted normal density") rows(2) region(lstyle(none))) ///
     graphregion(color(white)) plotregion(color(white)) ///
     name(resid99, replace)
+graph export "$output_dir\residuals_1399_normality.pdf", replace
+graph export "$output_dir\residuals_1399_normality.png", width(1800) replace
 graph save "$output_dir\residuals_1399_normality.gph", replace
 
-graph combine resid98 resid99, ///
-    cols(2) ///
-    title("Residual Normality Check, 1398-1399 All-Household Model", size(medium)) ///
-    note("Residuals from unweighted OLS consumption models; displayed densities weighted by HIES Weight.", size(vsmall)) ///
-    graphregion(color(white)) ///
-    name(residuals_9899_normality, replace)
-
-graph export "$output_dir\residuals_9899_normality.pdf", replace
-graph export "$output_dir\residuals_9899_normality.png", width(2400) replace
-graph save "$output_dir\residuals_9899_normality.gph", replace
 
 log close

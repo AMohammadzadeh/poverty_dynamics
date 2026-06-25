@@ -28,8 +28,7 @@ This keeps the robustness diagnostic tied to the model that generates the report
 
 ## Plot Design
 
-- Plot 1398 and 1399 residuals separately.
-- Use two panels in one figure.
+- Plot 1398 and 1399 residuals as separate standalone figures, not as a combined two-panel figure.
 - For each year, show a residual histogram scaled as a density.
 - Overlay a fitted normal density using that year's residual mean and standard deviation.
 - Use raw residuals rather than standardized residuals because this is the more common applied-economics presentation and is closer to Dang et al.'s visual diagnostic.
@@ -60,10 +59,11 @@ figures/residuals_9899_normality.do
 Expected exported outputs:
 
 ```text
-figures/residuals_9899_normality.pdf
-figures/residuals_9899_normality.png
-figures/residuals_9899_normality.gph
+figures/residuals_1398_normality.pdf
+figures/residuals_1398_normality.png
 figures/residuals_1398_normality.gph
+figures/residuals_1399_normality.pdf
+figures/residuals_1399_normality.png
 figures/residuals_1399_normality.gph
 figures/residuals_9899_normality.log
 ```

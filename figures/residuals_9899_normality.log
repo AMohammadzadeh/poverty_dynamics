@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  E:\my_papers\poverty_dynamics\figures\residuals_9899_normality.log
   log type:  text
- opened on:  25 Jun 2026, 13:11:03
+ opened on:  25 Jun 2026, 17:40:43
 
 . 
 . global hdage98 "HAge>= 25 & HAge<= 55"
@@ -173,8 +173,8 @@ HMarritalS~e |  -.0217919   .0176297    -1.24   0.216    -.0563557     .012772
 .     keep year residual Weight
 
 .     save "`r98'", replace
-(file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000001.tmp not found)
-file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000001.tmp saved as .dta format
+(file C:\Users\Asus\AppData\Local\Temp\ST_2c44_000001.tmp not found)
+file C:\Users\Asus\AppData\Local\Temp\ST_2c44_000001.tmp saved as .dta format
 
 . restore
 
@@ -191,8 +191,8 @@ file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000001.tmp saved as .dta format
 .     keep year residual Weight
 
 .     save "`r99'", replace
-(file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000002.tmp not found)
-file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000002.tmp saved as .dta format
+(file C:\Users\Asus\AppData\Local\Temp\ST_2c44_000002.tmp not found)
+file C:\Users\Asus\AppData\Local\Temp\ST_2c44_000002.tmp saved as .dta format
 
 . restore
 
@@ -203,8 +203,8 @@ file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000002.tmp saved as .dta format
 . append using "`r99'"
 
 . save "`residuals'", replace
-(file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000003.tmp not found)
-file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000003.tmp saved as .dta format
+(file C:\Users\Asus\AppData\Local\Temp\ST_2c44_000003.tmp not found)
+file C:\Users\Asus\AppData\Local\Temp\ST_2c44_000003.tmp saved as .dta format
 
 . 
 . * Common binning and x-axis range across panels.
@@ -253,8 +253,8 @@ file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000003.tmp saved as .dta format
 .     gen double density = bin_w / (total_w * `width')
 
 .     save "`h98'", replace
-(file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000004.tmp not found)
-file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000004.tmp saved as .dta format
+(file C:\Users\Asus\AppData\Local\Temp\ST_2c44_000004.tmp not found)
+file C:\Users\Asus\AppData\Local\Temp\ST_2c44_000004.tmp saved as .dta format
 
 . restore
 
@@ -277,8 +277,8 @@ file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000004.tmp saved as .dta format
 .     gen double density = bin_w / (total_w * `width')
 
 .     save "`h99'", replace
-(file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000005.tmp not found)
-file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000005.tmp saved as .dta format
+(file C:\Users\Asus\AppData\Local\Temp\ST_2c44_000005.tmp not found)
+file C:\Users\Asus\AppData\Local\Temp\ST_2c44_000005.tmp saved as .dta format
 
 . restore
 
@@ -301,9 +301,15 @@ file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000005.tmp saved as .dta format
 >     graphregion(color(white)) plotregion(color(white)) ///
 >     name(resid98, replace)
 
+. graph export "$output_dir\residuals_1398_normality.pdf", replace
+file E:\my_papers\poverty_dynamics\figures\residuals_1398_normality.pdf saved
+    as PDF format
+
+. graph export "$output_dir\residuals_1398_normality.png", width(1800) replace
+file E:\my_papers\poverty_dynamics\figures\residuals_1398_normality.png saved
+    as PNG format
+
 . graph save "$output_dir\residuals_1398_normality.gph", replace
-(file E:\my_papers\poverty_dynamics\figures\residuals_1398_normality.gph not
-    found)
 file E:\my_papers\poverty_dynamics\figures\residuals_1398_normality.gph saved
 
 . 
@@ -325,41 +331,22 @@ file E:\my_papers\poverty_dynamics\figures\residuals_1398_normality.gph saved
 >     graphregion(color(white)) plotregion(color(white)) ///
 >     name(resid99, replace)
 
+. graph export "$output_dir\residuals_1399_normality.pdf", replace
+file E:\my_papers\poverty_dynamics\figures\residuals_1399_normality.pdf saved
+    as PDF format
+
+. graph export "$output_dir\residuals_1399_normality.png", width(1800) replace
+file E:\my_papers\poverty_dynamics\figures\residuals_1399_normality.png saved
+    as PNG format
+
 . graph save "$output_dir\residuals_1399_normality.gph", replace
-(file E:\my_papers\poverty_dynamics\figures\residuals_1399_normality.gph not
-    found)
 file E:\my_papers\poverty_dynamics\figures\residuals_1399_normality.gph saved
 
 . 
-. graph combine resid98 resid99, ///
->     cols(2) ///
->     title("Residual Normality Check, 1398-1399 All-Household Model", size(med
-> ium)) ///
->     note("Residuals from unweighted OLS consumption models; displayed densiti
-> es weighted by HIES Weight.", size(vsmall)) ///
->     graphregion(color(white)) ///
->     name(residuals_9899_normality, replace)
-
-. 
-. graph export "$output_dir\residuals_9899_normality.pdf", replace
-file E:\my_papers\poverty_dynamics\figures\residuals_9899_normality.pdf saved
-    as PDF format
-
-. graph export "$output_dir\residuals_9899_normality.png", width(2400) replace
-(file E:\my_papers\poverty_dynamics\figures\residuals_9899_normality.png not
-    found)
-file E:\my_papers\poverty_dynamics\figures\residuals_9899_normality.png saved
-    as PNG format
-
-. graph save "$output_dir\residuals_9899_normality.gph", replace
-(file E:\my_papers\poverty_dynamics\figures\residuals_9899_normality.gph not
-    found)
-file E:\my_papers\poverty_dynamics\figures\residuals_9899_normality.gph saved
-
 . 
 . log close
       name:  <unnamed>
        log:  E:\my_papers\poverty_dynamics\figures\residuals_9899_normality.log
   log type:  text
- closed on:  25 Jun 2026, 13:11:17
+ closed on:  25 Jun 2026, 17:40:46
 -------------------------------------------------------------------------------
