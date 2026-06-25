@@ -1,0 +1,365 @@
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  E:\my_papers\poverty_dynamics\figures\residuals_9899_normality.log
+  log type:  text
+ opened on:  25 Jun 2026, 13:11:03
+
+. 
+. global hdage98 "HAge>= 25 & HAge<= 55"
+
+. global hdage99 "HAge>= 26 & HAge<= 56"
+
+. 
+. global depvar_98 "lcpc_98"
+
+. global depvar_99 "lcpc_99"
+
+. global indvar "HAge i.HSex HEduYears HLiterate NKids i.Region i.ProvinceCode 
+> Size HEmployed HMarritalState"
+
+. 
+. use Y98_99_final, clear
+(Written by R.              )
+
+. destring strata*, replace
+strata_98: all characters numeric; replaced as int
+strata_99: all characters numeric; replaced as int
+
+. destring HHID, replace
+HHID: all characters numeric; replaced as double
+
+. 
+. * Residuals from the exact all-household prediction regressions.
+. xi: reg $depvar_98 $indvar if $hdage98 & samp==1, cluster(strata_98)
+i.HSex            _IHSex_1-2          (naturally coded; _IHSex_1 omitted)
+i.Region          _IRegion_1-2        (naturally coded; _IRegion_1 omitted)
+i.ProvinceCode    _IProvinceC_0-30    (naturally coded; _IProvinceC_0 omitted)
+
+Linear regression                               Number of obs     =      5,686
+                                                F(39, 4028)       =      85.75
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.4237
+                                                Root MSE          =     .44714
+
+                          (Std. err. adjusted for 4,029 clusters in strata_98)
+------------------------------------------------------------------------------
+             |               Robust
+     lcpc_98 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        HAge |   .0136242   .0010155    13.42   0.000     .0116334    .0156151
+    _IHSex_2 |  -.0219768   .0364815    -0.60   0.547    -.0935007    .0495472
+   HEduYears |   .0477668   .0016638    28.71   0.000     .0445049    .0510287
+   HLiterate |  -.0683036   .0285893    -2.39   0.017    -.1243545   -.0122527
+       NKids |  -.0051848   .0095248    -0.54   0.586    -.0238586    .0134891
+  _IRegion_2 |  -.1790811   .0137585   -13.02   0.000    -.2060553   -.1521069
+_IProvinc~_1 |   -.115114   .0562505    -2.05   0.041    -.2253961   -.0048319
+_IProvinc~_2 |   .1234363   .0534229     2.31   0.021     .0186979    .2281746
+_IProvinc~_3 |  -.2247269   .0549213    -4.09   0.000    -.3324031   -.1170507
+_IProvinc~_4 |  -.3630615   .0523421    -6.94   0.000    -.4656809    -.260442
+_IProvinc~_5 |  -.0521823   .0466122    -1.12   0.263    -.1435679    .0392033
+_IProvinc~_6 |  -.1399686   .0472475    -2.96   0.003    -.2325998   -.0473374
+_IProvinc~_7 |   -.157146   .0507276    -3.10   0.002    -.2566002   -.0576918
+_IProvinc~_8 |  -.5652055   .0500651   -11.29   0.000    -.6633608   -.4670502
+_IProvinc~_9 |  -.1365427   .0464706    -2.94   0.003    -.2276508   -.0454346
+_IProvinc~10 |  -.0259167    .049002    -0.53   0.597    -.1219876    .0701543
+_IProvinc~11 |  -.5723816   .0513468   -11.15   0.000    -.6730497   -.4717134
+_IProvinc~12 |   -.191659   .0494553    -3.88   0.000    -.2886188   -.0946993
+_IProvinc~13 |  -.1141896   .0546068    -2.09   0.037    -.2212491   -.0071301
+_IProvinc~14 |  -.1169882   .0463583    -2.52   0.012    -.2078761   -.0261003
+_IProvinc~15 |  -.2342819   .0499725    -4.69   0.000    -.3322556   -.1363081
+_IProvinc~16 |  -.2380552   .0467509    -5.09   0.000    -.3297128   -.1463975
+_IProvinc~17 |  -.2402953    .047142    -5.10   0.000    -.3327198   -.1478709
+_IProvinc~18 |  -.1020691   .0489171    -2.09   0.037    -.1979736   -.0061646
+_IProvinc~19 |  -.1006729   .0520396    -1.93   0.053    -.2026993    .0013536
+_IProvinc~20 |   -.379097    .054225    -6.99   0.000    -.4854081    -.272786
+_IProvinc~21 |  -.0472718   .0473228    -1.00   0.318    -.1400507     .045507
+_IProvinc~22 |  -.0022821   .0482572    -0.05   0.962    -.0968929    .0923287
+_IProvinc~23 |   .1285292   .0468807     2.74   0.006     .0366171    .2204414
+_IProvinc~24 |  -.0774956   .0507056    -1.53   0.127    -.1769067    .0219155
+_IProvinc~25 |  -.1731639    .053825    -3.22   0.001    -.2786906   -.0676372
+_IProvinc~26 |  -.0078761   .0470868    -0.17   0.867    -.1001923    .0844401
+_IProvinc~27 |  -.2010272   .0503044    -4.00   0.000    -.2996517   -.1024028
+_IProvinc~28 |  -.2105345   .0483372    -4.36   0.000    -.3053022   -.1157668
+_IProvinc~29 |  -.3794249   .0500105    -7.59   0.000    -.4774732   -.2813767
+_IProvinc~30 |   .1845342   .0533572     3.46   0.001     .0799245    .2891439
+        Size |  -.1221103     .00799   -15.28   0.000    -.1377751   -.1064454
+   HEmployed |   .1396655   .0224654     6.22   0.000      .095621    .1837101
+HMarritalS~e |  -.0587948   .0172767    -3.40   0.001    -.0926666    -.024923
+       _cons |   15.78955   .0704505   224.12   0.000     15.65143    15.92767
+------------------------------------------------------------------------------
+
+. gen byte esamp98 = e(sample)
+
+. predict double eh98 if esamp98, res
+(12,961 missing values generated)
+
+. 
+. xi: reg $depvar_99 $indvar if $hdage99 & samp==2, cluster(strata_99)
+i.HSex            _IHSex_1-2          (naturally coded; _IHSex_1 omitted)
+i.Region          _IRegion_1-2        (naturally coded; _IRegion_1 omitted)
+i.ProvinceCode    _IProvinceC_0-30    (naturally coded; _IProvinceC_0 omitted)
+
+Linear regression                               Number of obs     =      5,799
+                                                F(39, 4069)       =      68.88
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.3743
+                                                Root MSE          =     .47505
+
+                          (Std. err. adjusted for 4,070 clusters in strata_99)
+------------------------------------------------------------------------------
+             |               Robust
+     lcpc_99 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        HAge |   .0111855   .0010189    10.98   0.000     .0091879    .0131831
+    _IHSex_2 |   -.012624   .0340033    -0.37   0.710     -.079289     .054041
+   HEduYears |   .0447739   .0018695    23.95   0.000     .0411086    .0484391
+   HLiterate |  -.1016767   .0286419    -3.55   0.000    -.1578305    -.045523
+       NKids |  -.0122986   .0099285    -1.24   0.216    -.0317638    .0071666
+  _IRegion_2 |  -.2221689   .0146306   -15.19   0.000    -.2508528   -.1934849
+_IProvinc~_1 |  -.0879591   .0616034    -1.43   0.153    -.2087354    .0328173
+_IProvinc~_2 |   .1485285   .0652607     2.28   0.023     .0205819    .2764752
+_IProvinc~_3 |  -.2695047   .0627379    -4.30   0.000    -.3925052   -.1465042
+_IProvinc~_4 |  -.4286604    .061598    -6.96   0.000    -.5494261   -.3078946
+_IProvinc~_5 |  -.1649145   .0556872    -2.96   0.003    -.2740918   -.0557372
+_IProvinc~_6 |  -.1932034   .0572092    -3.38   0.001    -.3053648    -.081042
+_IProvinc~_7 |  -.2030619   .0575577    -3.53   0.000    -.3159064   -.0902174
+_IProvinc~_8 |  -.4378847     .05779    -7.58   0.000    -.5511848   -.3245846
+_IProvinc~_9 |  -.2068146   .0542521    -3.81   0.000    -.3131783   -.1004509
+_IProvinc~10 |   .0097181   .0630995     0.15   0.878    -.1139915    .1334276
+_IProvinc~11 |  -.6582808    .061961   -10.62   0.000    -.7797583   -.5368033
+_IProvinc~12 |  -.1105763   .0616016    -1.80   0.073    -.2313492    .0101966
+_IProvinc~13 |  -.3573788   .0680555    -5.25   0.000    -.4908048   -.2239527
+_IProvinc~14 |  -.2222712   .0547158    -4.06   0.000    -.3295441   -.1149983
+_IProvinc~15 |  -.3076084   .0623657    -4.93   0.000    -.4298793   -.1853375
+_IProvinc~16 |  -.3324062   .0587161    -5.66   0.000    -.4475219   -.2172906
+_IProvinc~17 |  -.2862452   .0567246    -5.05   0.000    -.3974565   -.1750339
+_IProvinc~18 |   .0067564   .0582586     0.12   0.908    -.1074625    .1209752
+_IProvinc~19 |  -.0743545   .0634105    -1.17   0.241    -.1986738    .0499648
+_IProvinc~20 |  -.2329821   .0708231    -3.29   0.001    -.3718342     -.09413
+_IProvinc~21 |   -.047661   .0589598    -0.81   0.419    -.1632543    .0679324
+_IProvinc~22 |  -.1499883   .0576509    -2.60   0.009    -.2630157   -.0369609
+_IProvinc~23 |   .2160073   .0578023     3.74   0.000     .1026832    .3293315
+_IProvinc~24 |  -.2723163   .0579583    -4.70   0.000    -.3859462   -.1586864
+_IProvinc~25 |  -.2740604   .0585089    -4.68   0.000    -.3887699   -.1593509
+_IProvinc~26 |  -.0204591     .05568    -0.37   0.713    -.1296223    .0887041
+_IProvinc~27 |  -.2940415   .0547697    -5.37   0.000    -.4014202   -.1866629
+_IProvinc~28 |  -.4826841   .0558491    -8.64   0.000    -.5921789   -.3731893
+_IProvinc~29 |   -.454745    .057101    -7.96   0.000    -.5666942   -.3427959
+_IProvinc~30 |   .1487042   .0667759     2.23   0.026     .0177869    .2796215
+        Size |  -.0731871    .008362    -8.75   0.000    -.0895811   -.0567931
+   HEmployed |   .1165556   .0211845     5.50   0.000     .0750224    .1580889
+HMarritalS~e |  -.0217919   .0176297    -1.24   0.216    -.0563557     .012772
+       _cons |   16.08465   .0776651   207.10   0.000     15.93238    16.23691
+------------------------------------------------------------------------------
+
+. gen byte esamp99 = e(sample)
+
+. predict double eh99 if esamp99, res
+(12,848 missing values generated)
+
+. 
+. tempfile r98 r99 residuals h98 h99
+
+. 
+. preserve
+
+.     keep if esamp98 == 1 & eh98 < . & Weight < . & Weight > 0
+(12,961 observations deleted)
+
+.     gen int year = 1398
+
+.     gen double residual = eh98
+
+.     keep year residual Weight
+
+.     save "`r98'", replace
+(file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000001.tmp not found)
+file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000001.tmp saved as .dta format
+
+. restore
+
+. 
+. preserve
+
+.     keep if esamp99 == 1 & eh99 < . & Weight < . & Weight > 0
+(12,848 observations deleted)
+
+.     gen int year = 1399
+
+.     gen double residual = eh99
+
+.     keep year residual Weight
+
+.     save "`r99'", replace
+(file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000002.tmp not found)
+file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000002.tmp saved as .dta format
+
+. restore
+
+. 
+. use "`r98'", clear
+(Written by R.              )
+
+. append using "`r99'"
+
+. save "`residuals'", replace
+(file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000003.tmp not found)
+file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000003.tmp saved as .dta format
+
+. 
+. * Common binning and x-axis range across panels.
+. quietly summarize residual
+
+. local xmin = floor(r(min) * 10) / 10
+
+. local xmax = ceil(r(max) * 10) / 10
+
+. local nbins = 40
+
+. local width = (`xmax' - `xmin') / `nbins'
+
+. 
+. if `width' <= 0 {
+.     display as error "Residual range is invalid; cannot construct histogram b
+> ins."
+.     exit 498
+. }
+
+. 
+. gen int bin = floor((residual - `xmin') / `width') + 1 if residual >= `xmin' 
+> & residual <= `xmax'
+
+. replace bin = `nbins' if bin > `nbins' & bin < .
+(0 real changes made)
+
+. gen double bin_mid = `xmin' + (bin - 0.5) * `width'
+
+. 
+. preserve
+
+.     keep if year == 1398 & bin < .
+(5,799 observations deleted)
+
+.     quietly summarize residual [aw=Weight]
+
+.     local mu98 = r(mean)
+
+.     local sd98 = r(sd)
+
+.     egen double total_w = total(Weight)
+
+.     collapse (sum) bin_w=Weight (first) total_w, by(bin bin_mid)
+
+.     gen double density = bin_w / (total_w * `width')
+
+.     save "`h98'", replace
+(file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000004.tmp not found)
+file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000004.tmp saved as .dta format
+
+. restore
+
+. 
+. preserve
+
+.     keep if year == 1399 & bin < .
+(5,686 observations deleted)
+
+.     quietly summarize residual [aw=Weight]
+
+.     local mu99 = r(mean)
+
+.     local sd99 = r(sd)
+
+.     egen double total_w = total(Weight)
+
+.     collapse (sum) bin_w=Weight (first) total_w, by(bin bin_mid)
+
+.     gen double density = bin_w / (total_w * `width')
+
+.     save "`h99'", replace
+(file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000005.tmp not found)
+file C:\Users\Asus\AppData\Local\Temp\ST_3a04_000005.tmp saved as .dta format
+
+. restore
+
+. 
+. use "`h98'", clear
+(Written by R.              )
+
+. twoway ///
+>     (bar density bin_mid, barwidth(`width') color(navy%40) lcolor(navy%20)) /
+> //
+>     (function y=normalden((x-(`mu98'))/(`sd98'))/(`sd98'), range(`xmin' `xmax
+> ') ///
+>         lcolor(maroon) lwidth(medthick)), ///
+>     title("A. 1398 residuals", size(medsmall)) ///
+>     xtitle("OLS residual") ///
+>     ytitle("Weighted density") ///
+>     xscale(range(`xmin' `xmax')) ///
+>     legend(order(1 "Weighted histogram" 2 "Fitted normal density") rows(2) re
+> gion(lstyle(none))) ///
+>     graphregion(color(white)) plotregion(color(white)) ///
+>     name(resid98, replace)
+
+. graph save "$output_dir\residuals_1398_normality.gph", replace
+(file E:\my_papers\poverty_dynamics\figures\residuals_1398_normality.gph not
+    found)
+file E:\my_papers\poverty_dynamics\figures\residuals_1398_normality.gph saved
+
+. 
+. use "`h99'", clear
+(Written by R.              )
+
+. twoway ///
+>     (bar density bin_mid, barwidth(`width') color(navy%40) lcolor(navy%20)) /
+> //
+>     (function y=normalden((x-(`mu99'))/(`sd99'))/(`sd99'), range(`xmin' `xmax
+> ') ///
+>         lcolor(maroon) lwidth(medthick)), ///
+>     title("B. 1399 residuals", size(medsmall)) ///
+>     xtitle("OLS residual") ///
+>     ytitle("Weighted density") ///
+>     xscale(range(`xmin' `xmax')) ///
+>     legend(order(1 "Weighted histogram" 2 "Fitted normal density") rows(2) re
+> gion(lstyle(none))) ///
+>     graphregion(color(white)) plotregion(color(white)) ///
+>     name(resid99, replace)
+
+. graph save "$output_dir\residuals_1399_normality.gph", replace
+(file E:\my_papers\poverty_dynamics\figures\residuals_1399_normality.gph not
+    found)
+file E:\my_papers\poverty_dynamics\figures\residuals_1399_normality.gph saved
+
+. 
+. graph combine resid98 resid99, ///
+>     cols(2) ///
+>     title("Residual Normality Check, 1398-1399 All-Household Model", size(med
+> ium)) ///
+>     note("Residuals from unweighted OLS consumption models; displayed densiti
+> es weighted by HIES Weight.", size(vsmall)) ///
+>     graphregion(color(white)) ///
+>     name(residuals_9899_normality, replace)
+
+. 
+. graph export "$output_dir\residuals_9899_normality.pdf", replace
+file E:\my_papers\poverty_dynamics\figures\residuals_9899_normality.pdf saved
+    as PDF format
+
+. graph export "$output_dir\residuals_9899_normality.png", width(2400) replace
+(file E:\my_papers\poverty_dynamics\figures\residuals_9899_normality.png not
+    found)
+file E:\my_papers\poverty_dynamics\figures\residuals_9899_normality.png saved
+    as PNG format
+
+. graph save "$output_dir\residuals_9899_normality.gph", replace
+(file E:\my_papers\poverty_dynamics\figures\residuals_9899_normality.gph not
+    found)
+file E:\my_papers\poverty_dynamics\figures\residuals_9899_normality.gph saved
+
+. 
+. log close
+      name:  <unnamed>
+       log:  E:\my_papers\poverty_dynamics\figures\residuals_9899_normality.log
+  log type:  text
+ closed on:  25 Jun 2026, 13:11:17
+-------------------------------------------------------------------------------
