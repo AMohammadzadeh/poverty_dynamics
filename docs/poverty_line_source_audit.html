@@ -1,0 +1,900 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Source Audit: $8.30 Poverty-Line Subsection</title>
+  <style>
+    :root {
+      --ink: #172126;
+      --ink-soft: #3e4b50;
+      --paper: #ffffff;
+      --wash: #edf2f2;
+      --line: #cbd5d7;
+      --teal: #0f6062;
+      --teal-soft: #dcebec;
+      --red: #9b2f32;
+      --red-soft: #f5e3e3;
+      --gold: #8a640d;
+      --gold-soft: #f4ecd4;
+      --blue: #285f87;
+      --blue-soft: #e2edf5;
+      --green: #326641;
+      --green-soft: #e2eee5;
+      --mono: Consolas, "Courier New", monospace;
+      --sans: "Segoe UI", Arial, sans-serif;
+      --serif: Georgia, "Times New Roman", serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--wash);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.58;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: var(--teal);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    a:hover { color: var(--red); }
+
+    header {
+      color: #fff;
+      background: var(--ink);
+      border-bottom: 6px solid var(--red);
+    }
+
+    .header-inner,
+    main,
+    .footer-inner {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .header-inner {
+      padding: 44px 0 36px;
+    }
+
+    .kicker {
+      margin: 0 0 8px;
+      color: #9ed0d0;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--serif);
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 820px;
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.7rem);
+      line-height: 1.05;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      max-width: 780px;
+      margin: 18px 0 0;
+      color: #dce5e6;
+      font-size: 1.05rem;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 22px;
+      margin-top: 24px;
+      color: #bdc9cb;
+      font-size: 0.86rem;
+    }
+
+    main {
+      padding: 34px 0 60px;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px 0 26px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    nav a {
+      padding: 7px 10px;
+      color: var(--ink);
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      font-size: 0.86rem;
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      color: #fff;
+      background: var(--teal);
+      border-color: var(--teal);
+    }
+
+    section {
+      padding: 36px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:last-child { border-bottom: 0; }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 1.8rem;
+      line-height: 1.2;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+    }
+
+    .section-intro {
+      max-width: 820px;
+      margin: 0 0 24px;
+      color: var(--ink-soft);
+    }
+
+    .verdict-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .verdict {
+      min-height: 136px;
+      padding: 18px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-top: 5px solid var(--teal);
+      border-radius: 6px;
+    }
+
+    .verdict.critical { border-top-color: var(--red); }
+    .verdict.caution { border-top-color: var(--gold); }
+    .verdict.code { border-top-color: var(--blue); }
+
+    .verdict strong {
+      display: block;
+      margin-bottom: 8px;
+      font-family: var(--serif);
+      font-size: 1.05rem;
+    }
+
+    .verdict p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+    }
+
+    .critical-band {
+      margin-top: 18px;
+      padding: 18px 20px;
+      background: var(--red-soft);
+      border-left: 5px solid var(--red);
+      border-radius: 4px;
+    }
+
+    .critical-band strong { color: var(--red); }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 18px 0 14px;
+    }
+
+    .controls button {
+      min-height: 36px;
+      padding: 7px 12px;
+      color: var(--ink);
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      font: 650 0.84rem var(--sans);
+      cursor: pointer;
+    }
+
+    .controls button[aria-pressed="true"] {
+      color: #fff;
+      background: var(--teal);
+      border-color: var(--teal);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    th, td {
+      padding: 12px 13px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid #dfe6e7;
+    }
+
+    th {
+      color: #fff;
+      background: #26343a;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    tbody tr:hover { background: #f5f8f8; }
+
+    .num {
+      width: 46px;
+      color: var(--ink-soft);
+      font-family: var(--mono);
+      white-space: nowrap;
+    }
+
+    .sentence {
+      min-width: 330px;
+      max-width: 580px;
+      font-family: var(--serif);
+    }
+
+    .status {
+      display: inline-block;
+      padding: 3px 7px;
+      border: 1px solid;
+      border-radius: 4px;
+      font-size: 0.73rem;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .status.supported {
+      color: var(--green);
+      background: var(--green-soft);
+      border-color: #9bb9a3;
+    }
+
+    .status.partial {
+      color: var(--gold);
+      background: var(--gold-soft);
+      border-color: #c9ad63;
+    }
+
+    .status.unsupported {
+      color: var(--red);
+      background: var(--red-soft);
+      border-color: #d19a9c;
+    }
+
+    .status.corrected {
+      color: var(--blue);
+      background: var(--blue-soft);
+      border-color: #9dbbd0;
+    }
+
+    .status.decision {
+      color: var(--teal);
+      background: var(--teal-soft);
+      border-color: #91b9ba;
+    }
+
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .evidence {
+      min-width: 0;
+      padding: 20px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+
+    .evidence a,
+    .evidence code,
+    .source-meta {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .evidence .source-id {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 2px 7px;
+      color: #fff;
+      background: var(--teal);
+      border-radius: 3px;
+      font: 700 0.73rem var(--mono);
+    }
+
+    .evidence .source-meta {
+      margin: 0 0 13px;
+      color: var(--ink-soft);
+      font-size: 0.82rem;
+    }
+
+    blockquote {
+      margin: 12px 0;
+      padding: 10px 13px;
+      color: #243238;
+      background: #f3f6f6;
+      border-left: 4px solid var(--teal);
+      font-family: var(--serif);
+      font-size: 0.96rem;
+    }
+
+    blockquote + blockquote { margin-top: 8px; }
+
+    .locator {
+      display: block;
+      margin-top: 5px;
+      color: var(--ink-soft);
+      font: 0.75rem var(--sans);
+    }
+
+    code, pre {
+      font-family: var(--mono);
+    }
+
+    code {
+      padding: 1px 4px;
+      background: #e7edef;
+      border-radius: 3px;
+      font-size: 0.88em;
+    }
+
+    pre {
+      overflow-x: auto;
+      margin: 12px 0 0;
+      padding: 14px;
+      color: #e9f0f1;
+      background: #202c31;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .prose {
+      padding: 26px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--teal);
+      border-radius: 6px;
+    }
+
+    .prose p {
+      max-width: 900px;
+      margin: 0 0 16px;
+      font-family: var(--serif);
+      font-size: 1rem;
+      line-height: 1.72;
+    }
+
+    .prose p:last-child { margin-bottom: 0; }
+
+    sup a {
+      padding: 0 2px;
+      font: 700 0.72rem var(--mono);
+      text-decoration: none;
+    }
+
+    .note {
+      margin-top: 14px;
+      padding: 14px 16px;
+      background: var(--blue-soft);
+      border-left: 4px solid var(--blue);
+      border-radius: 4px;
+      color: #25465d;
+      font-size: 0.88rem;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      counter-reset: steps;
+      margin: 22px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .steps li {
+      position: relative;
+      min-height: 132px;
+      padding: 42px 15px 15px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      counter-increment: steps;
+    }
+
+    .steps li::before {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      content: counter(steps);
+      color: #fff;
+      background: var(--red);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      text-align: center;
+      font: 700 0.78rem/24px var(--sans);
+    }
+
+    .small {
+      color: var(--ink-soft);
+      font-size: 0.82rem;
+    }
+
+    footer {
+      color: #d6dfe0;
+      background: #26343a;
+    }
+
+    .footer-inner {
+      padding: 22px 0;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 900px) {
+      .verdict-grid,
+      .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .evidence-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 620px) {
+      .header-inner,
+      main,
+      .footer-inner {
+        width: min(calc(100% - 24px), 1180px);
+      }
+      .header-inner { padding: 32px 0 28px; }
+      .verdict-grid,
+      .steps { grid-template-columns: 1fr; }
+      .prose { padding: 18px; }
+      th, td { padding: 10px; }
+    }
+
+    @media print {
+      body { background: #fff; font-size: 10pt; }
+      header { color: #000; background: #fff; border-bottom: 2px solid #000; }
+      .subtitle, .meta { color: #333; }
+      nav, .controls { display: none; }
+      main, .header-inner, .footer-inner { width: 100%; }
+      section { break-inside: avoid; padding: 22px 0; }
+      .evidence, .verdict, .prose, .table-wrap { break-inside: avoid; }
+      a { color: #000; text-decoration: none; }
+      footer { color: #000; background: #fff; border-top: 1px solid #000; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <p class="kicker">Manuscript evidence review</p>
+      <h1>Source Audit: The $8.30 Poverty-Line Subsection</h1>
+      <p class="subtitle">A sentence-level check of source fit, factual precision, and the rial-conversion trail used in <em>Poverty Dynamics in Iran</em>.</p>
+      <div class="meta">
+        <span>Audit date: 10 July 2026</span>
+        <span>Branch: codex/audit-poverty-line-sources</span>
+        <span>Scope: the newer Section 4.1 comparison subsection only</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <nav aria-label="Audit sections">
+      <a href="#verdict">Verdict</a>
+      <a href="#original-audit">Original sentences</a>
+      <a href="#workbook">Workbook trace</a>
+      <a href="#revised-text">Revised text</a>
+      <a href="#revised-map">Revised map</a>
+      <a href="#evidence">Exact excerpts</a>
+      <a href="#next-steps">Required next step</a>
+    </nav>
+
+    <section id="verdict">
+      <h2>Executive Verdict</h2>
+      <p class="section-intro">The benchmark itself is well documented. The local-currency implementation is arithmetically reproducible but is not yet validated as a World Bank poverty conversion.</p>
+
+      <div class="verdict-grid">
+        <article class="verdict">
+          <strong>$8.30 is supported</strong>
+          <p>The World Bank reports $8.30 in 2021 PPP dollars as the line typical of upper-middle-income countries.</p>
+        </article>
+        <article class="verdict critical">
+          <strong>Rial conversion is provisional</strong>
+          <p>The workbook uses a GDP PPP series. World Bank methodology prefers a household-final-consumption PPP for poverty.</p>
+        </article>
+        <article class="verdict caution">
+          <strong>Workbook source is unknown</strong>
+          <p>Its early values match the current WDI GDP PPP series exactly, but the file contains no source, vintage, or retrieval date.</p>
+        </article>
+        <article class="verdict code">
+          <strong>Poverty boundary corrected</strong>
+          <p>The Stata code classifies equality with the threshold as poor. The revised text now says &ldquo;less than or equal to.&rdquo;</p>
+        </article>
+      </div>
+
+      <div class="critical-band">
+        <strong>Publication consequence.</strong>
+        The six rial values can remain in a draft only if they are labeled preliminary. Before final results are reported, the conversion should be reconstructed with documented poverty PPP, CPI, calendar, and day-to-month inputs, then every dependent estimate should be regenerated.
+      </div>
+    </section>
+
+    <section id="original-audit">
+      <h2>Original Sentence Audit</h2>
+      <p class="section-intro">The table preserves the 19 sentences in the original $8.30 subsection. &ldquo;Source mismatch&rdquo; means the general idea may be reasonable, but the cited item did not establish the wording used.</p>
+
+      <div class="controls" role="group" aria-label="Filter original sentences by audit status">
+        <button type="button" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-filter="supported" aria-pressed="false">Supported</button>
+        <button type="button" data-filter="partial" aria-pressed="false">Needs precision</button>
+        <button type="button" data-filter="unsupported" aria-pressed="false">Unsupported</button>
+        <button type="button" data-filter="corrected" aria-pressed="false">Corrected by code</button>
+        <button type="button" data-filter="decision" aria-pressed="false">Author decision</button>
+      </div>
+
+      <div class="table-wrap">
+        <table id="audit-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Original sentence</th>
+              <th>Verdict</th>
+              <th>Evidence finding and revision decision</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-status="partial">
+              <td class="num">O1</td>
+              <td class="sentence">The $8.30 per day threshold, measured in 2021 Purchasing Power Parity (PPP), is the World Bank's updated poverty line for assessing poverty in upper-middle-income countries.</td>
+              <td><span class="status partial">Needs precision</span></td>
+              <td><a href="#e1">E1</a> and <a href="#e2">E2</a> support the value. Revised to &ldquo;global poverty line typical of upper-middle-income countries,&rdquo; avoiding the implication that it is Iran's national line.</td>
+            </tr>
+            <tr data-status="partial">
+              <td class="num">O2</td>
+              <td class="sentence">It is derived by expressing updated national poverty lines in 2021 international dollars and taking the median across countries classified as upper-middle income at the time of their latest national poverty line; the estimated median of $8.29 is rounded to $8.30.</td>
+              <td><span class="status partial">Needs precision</span></td>
+              <td><a href="#e1">E1</a> supports the median and rounding. &ldquo;Latest&rdquo; was too loose: Foster et al. select one harmonized line per country closest to 2021 and classify it in the year of that observation.</td>
+            </tr>
+            <tr data-status="supported">
+              <td class="num">O3</td>
+              <td class="sentence">This line is part of a revised tiered measurement system that also includes an international extreme poverty line of $3.00 and a lower-middle-income line of $4.20.</td>
+              <td><span class="status supported">Supported</span></td>
+              <td><a href="#e1">E1</a> supports all three values. Terminology was tightened so $3.00 is the International Poverty Line and the other two are lines typical of income groups.</td>
+            </tr>
+            <tr data-status="supported">
+              <td class="num">O4</td>
+              <td class="sentence">Under the 2021 PPP update, these thresholds replace the corresponding 2017 PPP lines of $2.15, $3.65, and $6.85, respectively, for the World Bank's primary global poverty reporting.</td>
+              <td><span class="status supported">Supported</span></td>
+              <td><a href="#e2">E2</a> supports primary reporting and continued availability of the 2017-PPP series in PIP.</td>
+            </tr>
+            <tr data-status="unsupported">
+              <td class="num">O5</td>
+              <td class="sentence">The use of the 2021 PPP update, including the $8.30 line, is methodologically justified for several reasons.</td>
+              <td><span class="status unsupported">Unsupported</span></td>
+              <td>This was an evaluative conclusion presented as sourced fact. It was removed. The revision states the study's benchmark choice directly and then states its limits.</td>
+            </tr>
+            <tr data-status="partial">
+              <td class="num">O6</td>
+              <td class="sentence">First, it aligns the analysis with the World Bank's current reporting framework and with the most recent benchmark price comparisons produced by the International Comparison Program.</td>
+              <td><span class="status partial">Needs precision</span></td>
+              <td>Current reporting is supported by <a href="#e2">E2</a>. &ldquo;Benchmark price comparisons&rdquo; was potentially misleading for Iran because the manuscript did not document the Iran-specific poverty PPP used.</td>
+            </tr>
+            <tr data-status="partial">
+              <td class="num">O7</td>
+              <td class="sentence">PPPs are not static, and the 2021 benchmark incorporates updated information on relative price levels and more recent national poverty lines.</td>
+              <td><span class="status partial">Conflated mechanisms</span></td>
+              <td>The 2021 PPPs update relative-price information; updated national poverty lines separately affect the new global lines. The revision separates those mechanisms.</td>
+            </tr>
+            <tr data-status="partial">
+              <td class="num">O8</td>
+              <td class="sentence">Second, it preserves cross-country consistency by expressing household welfare against a common standard that accounts for differences in purchasing power, which is essential for international poverty comparisons.</td>
+              <td><span class="status partial">Source mismatch</span></td>
+              <td>The general function of PPPs is supported by World Bank sources, but the cited Ravallion item did not ground every part of this sentence. The claim was shortened and sourced to the World Bank.</td>
+            </tr>
+            <tr data-status="unsupported">
+              <td class="num">O9</td>
+              <td class="sentence">Third, it addresses a measurement gap in higher development contexts, where the extreme poverty line is often too low to capture the economic vulnerability relevant to upper-middle-income countries.</td>
+              <td><span class="status unsupported">Overstated</span></td>
+              <td>The World Bank says higher lines are more relevant in middle-income economies. &ldquo;Capture economic vulnerability&rdquo; went beyond the cited evidence and was removed.</td>
+            </tr>
+            <tr data-status="unsupported">
+              <td class="num">O10</td>
+              <td class="sentence">Finally, applying a single 2021 PPP framework across all survey years avoids combining thresholds from different PPP vintages and keeps the analysis consistent with the current Poverty and Inequality Platform.</td>
+              <td><span class="status unsupported">Not established</span></td>
+              <td>The first clause is a defensible design aim. The second was not established because PIP's welfare conversion uses a poverty PPP and temporal CPI adjustment that the project had not documented.</td>
+            </tr>
+            <tr data-status="partial">
+              <td class="num">O11</td>
+              <td class="sentence">For the empirical implementation, the daily PPP threshold is expressed as a monthly per-capita poverty line in Iranian rials for each HIES year.</td>
+              <td><span class="status partial">Incomplete method</span></td>
+              <td><a href="#e7">E7</a> now reveals the formula, but not an authoritative PPP source or CPI method. The revision documents both what was done and what remains unvalidated.</td>
+            </tr>
+            <tr data-status="partial">
+              <td class="num">O12</td>
+              <td class="sentence">The resulting lines applied in the analysis are 5,863,711 rials in 1398, 8,205,691 rials in 1399, 12,571,554 rials in 1400, 17,671,052 rials in 1401, 22,258,561 rials in 1402, and 29,175,368 rials in 1403.</td>
+              <td><span class="status partial">Code verified only</span></td>
+              <td><a href="#e8">E8</a> verifies these constants in the preparation code. <a href="#e7">E7</a> reproduces their arithmetic, but not their validity as $8.30 poverty conversions.</td>
+            </tr>
+            <tr data-status="corrected">
+              <td class="num">O13</td>
+              <td class="sentence">A household is classified as poor when its monthly per-capita consumption falls below the corresponding year-specific threshold.</td>
+              <td><span class="status corrected">Boundary corrected</span></td>
+              <td><a href="#e8">E8</a> shows that equality is poor as well. Revised to &ldquo;less than or equal to.&rdquo;</td>
+            </tr>
+            <tr data-status="partial">
+              <td class="num">O14</td>
+              <td class="sentence">These are the poverty lines used to construct the poverty-status variables and all poverty-transition estimates reported in the results section.</td>
+              <td><span class="status partial">Too absolute</span></td>
+              <td>The scripts use the constants, but a full regeneration audit of every published table was outside this source check. The revision avoids claiming that every displayed result has been regenerated.</td>
+            </tr>
+            <tr data-status="supported">
+              <td class="num">O15</td>
+              <td class="sentence">Nonetheless, PPP-based measures have recognized limitations.</td>
+              <td><span class="status supported">Supported</span></td>
+              <td><a href="#e6">E6</a> directly supports the existence of theoretical and empirical limitations.</td>
+            </tr>
+            <tr data-status="supported">
+              <td class="num">O16</td>
+              <td class="sentence">Changes in PPP benchmarks and in the national poverty lines underlying the global thresholds can revise the measured level of poverty even when the recent trend remains broadly similar.</td>
+              <td><span class="status supported">Supported</span></td>
+              <td><a href="#e2">E2</a> identifies multiple drivers of revisions and states that adoption of a new PPP vintage revises the historical series.</td>
+            </tr>
+            <tr data-status="unsupported">
+              <td class="num">O17</td>
+              <td class="sentence">Critics also note that a uniform international threshold may not fully represent locally specific needs, spatial price differences, or national definitions of minimum living standards.</td>
+              <td><span class="status unsupported">Source mismatch</span></td>
+              <td>The cited Reddy and Pogge item did not cleanly establish every listed dimension. The specific list was removed; the revision uses the World Bank's direct national-versus-global guidance.</td>
+            </tr>
+            <tr data-status="supported">
+              <td class="num">O18</td>
+              <td class="sentence">The World Bank therefore recommends national poverty lines for country-specific policy dialogue and targeting, while international lines are particularly useful for benchmarking and cross-country comparison.</td>
+              <td><span class="status supported">Supported</span></td>
+              <td><a href="#e2">E2</a> directly supports both uses.</td>
+            </tr>
+            <tr data-status="decision">
+              <td class="num">O19</td>
+              <td class="sentence">Consequently, this study uses the $8.30 (2021 PPP) line as a consistent international benchmark while recognizing the complementary value of national poverty lines and multidimensional deprivation measures.</td>
+              <td><span class="status decision">Author decision</span></td>
+              <td>The benchmark choice is the study's decision. The Alkire citation was unnecessary for that decision, and the multidimensional clause was removed because it was not used in the empirical implementation.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="workbook">
+      <h2>Workbook Provenance and Arithmetic</h2>
+      <p class="section-intro">The workbook at <code>E:\my_papers\GDP_PPP90_403.xlsx</code> contains one sheet and no source note, external link, connection, or custom provenance property. Its column is explicitly labeled <code>PPP_GDP=</code>.</p>
+
+      <div class="critical-band">
+        <strong>Inference, not proof.</strong>
+        Exact agreement in 1398-1400 and the column label make the World Bank WDI GDP PPP series the probable source family. The later differences indicate either an older data vintage or another transformation. The workbook alone cannot establish which.
+      </div>
+
+      <div class="table-wrap" style="margin-top:18px">
+        <table>
+          <thead>
+            <tr>
+              <th>Iranian year</th>
+              <th>Mapped year</th>
+              <th>Workbook PPP_GDP</th>
+              <th>Workbook result</th>
+              <th>Stata constant</th>
+              <th>Current WDI GDP PPP</th>
+              <th>Match?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1398</td><td>2019</td><td>23,549.0410</td><td>5,863,711.213</td><td>5,863,711</td><td>23,549.0410</td><td><span class="status supported">Exact</span></td></tr>
+            <tr><td>1399</td><td>2020</td><td>32,954.5859</td><td>8,205,691.898</td><td>8,205,691</td><td>32,954.5859</td><td><span class="status supported">Exact</span></td></tr>
+            <tr><td>1400</td><td>2021</td><td>50,488.1719</td><td>12,571,554.797</td><td>12,571,554</td><td>50,488.1719</td><td><span class="status supported">Exact</span></td></tr>
+            <tr><td>1401</td><td>2022</td><td>70,968.0830</td><td>17,671,052.660</td><td>17,671,052</td><td>71,211.43</td><td><span class="status partial">Different</span></td></tr>
+            <tr><td>1402</td><td>2023</td><td>89,391.8129</td><td>22,258,561.421</td><td>22,258,561</td><td>94,280.27</td><td><span class="status partial">Different</span></td></tr>
+            <tr><td>1403</td><td>2024</td><td>117,170.1562</td><td>29,175,368.906</td><td>29,175,368</td><td>118,096.56</td><td><span class="status partial">Different</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <pre>Workbook formula: monthly rial line = PPP_GDP_t * 8.3 * 30
+Arithmetic check: maximum absolute error across all 35 workbook rows = 0
+Stata storage: integer portion of the workbook result</pre>
+
+      <div class="note">
+        The current WDI &ldquo;private consumption&rdquo; PPP series is not a drop-in replacement. PIP's documented sequence first places local-currency welfare in 2021 prices using a national CPI, then applies a 2021 poverty PPP. The calendar mapping and 30-day convention also require explicit decisions.
+      </div>
+    </section>
+
+    <section id="revised-text">
+      <h2>Revised Subsection</h2>
+      <p class="section-intro">This is the substantive content now in <code>paper_text/thesis.tex</code>. Superscripts link to the evidence records below; author decisions and code-derived statements are identified in the sentence map.</p>
+
+      <article class="prose">
+        <p>The $8.30 per day threshold, measured in 2021 Purchasing Power Parity (PPP), is the World Bank's international poverty line for assessing poverty in upper-middle-income countries.<sup><a href="#e1">E1</a>, <a href="#e2">E2</a></sup> It is derived from harmonized national poverty lines expressed in 2021 PPP dollars: the median for upper-middle-income countries is $8.29 and is rounded to $8.30.<sup><a href="#e1">E1</a></sup> This line is part of a tiered measurement system that also includes an extreme poverty line ($3.00) and a lower-middle-income line ($4.20), allowing poverty to be assessed against standards that are more relevant to countries at different income levels.<sup><a href="#e1">E1</a>, <a href="#e2">E2</a></sup></p>
+
+        <p>The use of the 2021 PPP update, including the $8.30 line, is methodologically justified for several reasons. First, it incorporates the most recent ICP benchmark and updated national poverty lines used in global poverty monitoring.<sup><a href="#e1">E1</a></sup> Second, it ensures cross-country consistency by expressing household welfare in a common unit that accounts for differences in national price levels.<sup><a href="#e2">E2</a></sup> Third, the $8.30 line provides a more relevant benchmark for upper-middle-income countries, where the extreme poverty line is less informative.<sup><a href="#e2">E2</a></sup> Finally, it is consistent with the World Bank's current global poverty reporting framework, while estimates based on 2017 PPPs remain available through the Poverty and Inequality Platform.<sup><a href="#e2">E2</a>, <a href="#e4">E4</a></sup></p>
+
+        <p>Nonetheless, PPP-based measures have recognized limitations. Changes in PPP benchmarks and in the national poverty lines underlying the global thresholds can revise measured poverty levels and historical series.<sup><a href="#e1">E1</a>, <a href="#e2">E2</a></sup> International poverty lines also do not replace national poverty lines, which are more appropriate for country-specific assessment, policy dialogue, and targeting.<sup><a href="#e2">E2</a></sup> Consequently, the $8.30 (2021 PPP) line is used in this study as an international benchmark rather than as an official Iranian poverty line.</p>
+      </article>
+    </section>
+
+    <section id="revised-map">
+      <h2>Grounding Map for Every Revised Sentence</h2>
+      <p class="section-intro">&ldquo;Analysis&rdquo; marks a conclusion drawn transparently from local evidence and the stated external method. It is not presented as a quotation from a source.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Purpose</th>
+              <th>Grounding</th>
+              <th>Assessment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">R1</td><td>Defines the $8.30 threshold and its income-group relevance.</td><td><a href="#e1">E1</a>, <a href="#e2">E2</a></td><td><span class="status supported">Directly supported</span></td></tr>
+            <tr><td class="num">R2</td><td>States the median construction and rounding of $8.29.</td><td><a href="#e1">E1</a>, Section 3.1 and Table 1</td><td><span class="status supported">Directly supported</span></td></tr>
+            <tr><td class="num">R3</td><td>Reports the $3.00 and $4.20 companion lines.</td><td><a href="#e1">E1</a>, <a href="#e2">E2</a></td><td><span class="status supported">Directly supported</span></td></tr>
+            <tr><td class="num">R4</td><td>Introduces the methodological rationale.</td><td>Synthesis of R5-R8</td><td><span class="status decision">Organizing sentence</span></td></tr>
+            <tr><td class="num">R5</td><td>Identifies the updated ICP and national-line inputs.</td><td><a href="#e1">E1</a></td><td><span class="status supported">Directly supported</span></td></tr>
+            <tr><td class="num">R6</td><td>Explains the cross-country comparison function of PPPs.</td><td><a href="#e2">E2</a></td><td><span class="status supported">Directly supported</span></td></tr>
+            <tr><td class="num">R7</td><td>Explains the relevance of the higher line in middle-income contexts.</td><td><a href="#e2">E2</a></td><td><span class="status supported">Directly supported</span></td></tr>
+            <tr><td class="num">R8</td><td>Connects the line to current reporting and PIP availability.</td><td><a href="#e2">E2</a>, <a href="#e4">E4</a></td><td><span class="status supported">Directly supported</span></td></tr>
+            <tr><td class="num">R9</td><td>Introduces limitations.</td><td>Transition to R10-R11</td><td><span class="status decision">Organizing sentence</span></td></tr>
+            <tr><td class="num">R10</td><td>States the effect of benchmark and national-line revisions.</td><td><a href="#e1">E1</a>, <a href="#e2">E2</a></td><td><span class="status supported">Directly supported</span></td></tr>
+            <tr><td class="num">R11</td><td>Distinguishes international and national lines.</td><td><a href="#e2">E2</a></td><td><span class="status supported">Directly supported</span></td></tr>
+            <tr><td class="num">R12</td><td>Defines the study's interpretation of the threshold.</td><td>Author interpretation, bounded by <a href="#e2">E2</a></td><td><span class="status decision">Explicit decision</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="evidence">
+      <h2>Evidence Library: Exact Source Text</h2>
+      <p class="section-intro">The excerpts below are exact, short fragments relevant to the manuscript claims. They are intentionally brief; each locator links to the full primary source. Ellipses mark omitted text.</p>
+
+      <div class="evidence-grid">
+        <article class="evidence" id="e1">
+          <span class="source-id">E1</span>
+          <h3>Foster et al. (2025)</h3>
+          <p class="source-meta"><a href="https://documents1.worldbank.org/curated/en/099503206032533226/pdf/IDU-e2e09dcf-0af2-481a-a60a-64adf28171d0.pdf">Global Poverty Revisited Using 2021 PPPs and New Data on Consumption</a>, World Bank Policy Research Working Paper 11137.</p>
+          <blockquote>&ldquo;one harmonized poverty line per country&rdquo;<span class="locator">Paper p. 10, Section 3.1, PDF text lines 312-316.</span></blockquote>
+          <blockquote>&ldquo;2021 8.29 ... 45&rdquo;<span class="locator">Paper p. 10, Table 1, upper-middle-income row, lines 321-325.</span></blockquote>
+          <blockquote>&ldquo;preferred PPP conversion factor for measuring poverty&rdquo;<span class="locator">Paper p. 35, lines 1164-1167.</span></blockquote>
+          <blockquote>&ldquo;deflated to 2021 prices using national CPIs&rdquo;<span class="locator">Paper p. 8, lines 238-240.</span></blockquote>
+        </article>
+
+        <article class="evidence" id="e2">
+          <span class="source-id">E2</span>
+          <h3>World Bank (2025)</h3>
+          <p class="source-meta"><a href="https://www.worldbank.org/en/news/factsheet/2025/06/05/june-2025-update-to-global-poverty-lines">June 2025 Update to Global Poverty Lines</a>, official fact sheet.</p>
+          <blockquote>&ldquo;adjusted from $6.85 to $8.30&rdquo;<span class="locator">Question: What happens to results using other lines? Web line 120.</span></blockquote>
+          <blockquote>&ldquo;for its primary reporting&rdquo;<span class="locator">Question on adoption of 2021 PPPs. Web line 71.</span></blockquote>
+          <blockquote>&ldquo;national poverty line ... far more appropriate&rdquo;<span class="locator">Question on country programs and policy. Web line 104.</span></blockquote>
+          <blockquote>&ldquo;cross-country comparisons and benchmarking&rdquo;<span class="locator">Purpose and limitations of global measures. Web line 53.</span></blockquote>
+          <blockquote>&ldquo;three main factors explain the revisions&rdquo;<span class="locator">Question on estimate changes. Web line 113.</span></blockquote>
+        </article>
+
+        <article class="evidence" id="e3">
+          <span class="source-id">E3</span>
+          <h3>World Bank Iran Brief (2020)</h3>
+          <p class="source-meta"><a href="https://databankfiles.worldbank.org/public/ddpext_download/poverty/987B9C90-CB9F-4D93-AE8C-750588BF00QA/SM2020/Global_POVEQ_IRN.pdf">Poverty &amp; Equity Brief: Islamic Republic of Iran</a>, October 2020.</p>
+          <blockquote>&ldquo;There is no established official poverty line for Iran ... upper middle-income poverty line of $5.50&rdquo;<span class="locator">Printed p. 1, PDF text lines 20-23.</span></blockquote>
+          <p class="small">This is historical precedent for using an international income-group line. It does not prove that $8.30 is mandatory for the present study.</p>
+        </article>
+
+        <article class="evidence" id="e4">
+          <span class="source-id">E4</span>
+          <h3>World Bank PIP API (2026)</h3>
+          <p class="source-meta"><a href="https://api.worldbank.org/pip/v1/cp-charts?country=IRN&amp;povline=8.3&amp;ppp_version=2021">Iran country-profile query</a>, version 20260324_2021_01_02_PROD, accessed 10 July 2026.</p>
+          <blockquote><code>"country_code":"IRN"</code> ... <code>"poverty_line":8.3</code> ... <code>"welfare_type":"consumption"</code><span class="locator">Top-level fields returned by the API query.</span></blockquote>
+          <p class="small">This confirms that PIP publishes Iran estimates at a user-selected $8.30 line. It does not validate the project's rial constants.</p>
+        </article>
+
+        <article class="evidence" id="e5">
+          <span class="source-id">E5</span>
+          <h3>World Development Indicators (2026)</h3>
+          <p class="source-meta"><a href="https://api.worldbank.org/v2/country/IRN/indicator/PA.NUS.PPP?format=json&amp;per_page=100">PA.NUS.PPP, Iran</a>, accessed 10 July 2026.</p>
+          <blockquote><code>"id":"PA.NUS.PPP"</code><span class="locator">Indicator: PPP conversion factor, GDP (LCU per international dollar).</span></blockquote>
+          <p class="small">The API values for 2019-2021 equal the workbook values at stored precision. Values for 2022-2024 differ from the current API vintage.</p>
+        </article>
+
+        <article class="evidence" id="e6">
+          <span class="source-id">E6</span>
+          <h3>Deaton (2010)</h3>
+          <p class="source-meta"><a href="https://www.aeaweb.org/articles?id=10.1257%2Faer.100.1.5">Price Indexes, Inequality, and the Measurement of World Poverty</a>, <em>American Economic Review</em> 100(1): 5-34.</p>
+          <blockquote>&ldquo;PPP comparisons between widely different countries rest on weak theoretical and empirical foundations.&rdquo;<span class="locator">Abstract, AEA article page, web line 93.</span></blockquote>
+        </article>
+
+        <article class="evidence" id="e7">
+          <span class="source-id">E7</span>
+          <h3>Local workbook</h3>
+          <p class="source-meta"><code>E:\my_papers\GDP_PPP90_403.xlsx</code>, inspected read-only on 10 July 2026.</p>
+          <blockquote><code>PPP_GDP=</code> and <code>=C1*8.3*30</code><span class="locator">Sheet1, column C label and G1 formula. G2 has the same row-relative formula; all remaining values reproduce it exactly.</span></blockquote>
+          <p class="small">No source citation, retrieval date, external connection, or custom provenance property was found. Workbook metadata records a creator and last modifier, not a data source.</p>
+        </article>
+
+        <article class="evidence" id="e8">
+          <span class="source-id">E8</span>
+          <h3>Repository Stata code</h3>
+          <p class="source-meta"><a href="../codes_v2/data_prepration_v2.do">codes_v2/data_prepration_v2.do</a> and <a href="../parametric.do">parametric.do</a>.</p>
+          <pre>local pl_98    5863711
+local pl_99    8205691
+...
+local pl_1403  29175368
+
+gen p98p99_real = (lcpc_98 &lt;= lpoverty_line98 &amp;
+                    lcpc_99 &lt;= lpoverty_line99)</pre>
+          <p class="small">Preparation constants: lines 11-16. Inclusive poor/poor transition rule: <code>parametric.do</code> line 336.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="next-steps">
+      <h2>Required Before Final Results</h2>
+      <p class="section-intro">The next methodological task is not to choose a nicer-looking conversion. It is to reconstruct the line from authoritative inputs and preserve the full calculation trail.</p>
+      <ol class="steps">
+        <li><strong>Identify the poverty PPP.</strong><br>Obtain the 2021 household-final-consumption PPP for Iran actually used by the relevant PIP vintage.</li>
+        <li><strong>Fix the temporal index.</strong><br>Document the national CPI series, base period, Persian/Gregorian mapping, and any PIP exceptions.</li>
+        <li><strong>Fix the time unit.</strong><br>Record whether the monthly conversion uses 30 days, 365/12, or survey-specific month length.</li>
+        <li><strong>Regenerate and test.</strong><br>Rebuild all thresholds and dependent tables, then report sensitivity to a national or alternative international line.</li>
+      </ol>
+
+      <div class="note">
+        Bibliography cleanup completed for sources used by the revised subsection: the Deaton (2010) record is now an AER article with DOI; the Foster title protects &ldquo;PPP&rdquo; capitalization; the PIP citation points to the exact Iran API query; and the duplicate <code>Ferreira2016</code> key was removed in favor of the complete author record. Two pre-existing exact duplicates remain outside this subsection, <code>bilenkisi2015impact</code> and <code>cruces2015estimating</code>, together with the case-only pair <code>jolliffe2022</code>/<code>Jolliffe2022</code>.
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">Prepared as a reproducibility aid. Exact excerpts are deliberately short and paired with page, table, or line locators.</div>
+  </footer>
+
+  <script>
+    const buttons = document.querySelectorAll("[data-filter]");
+    const rows = document.querySelectorAll("#audit-table tbody tr");
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+        buttons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+        rows.forEach((row) => {
+          row.hidden = filter !== "all" && row.dataset.status !== filter;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
