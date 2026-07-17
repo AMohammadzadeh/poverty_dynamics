@@ -1,1 +1,4 @@
 poverty_line_data
+
+# Local JavaScript dependencies
+node_modules/
