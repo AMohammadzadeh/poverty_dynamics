@@ -177,7 +177,7 @@ further validate the DLLM method in three countries and three different scenario
 % \lr{DLLM}
 % تقریباً همواره شامل مقدار واقعی پویایی فقر است.
 
-It is worth noting that the DLLM method has its own limitations. One such limitation is the need for true panel data to estimate the correlation of error terms. To address this issue, \cite{dang2013measuring} propose a method that utilizes the country's data to estimate the correlation of error terms and obtain a point estimation instead of bounds. However, as highlighted by \cite{herault2019valid}, this method may not be suitable for developed countries, as the results differ significantly from the true values.
+It is worth noting that the DLLM method has its own limitations. One such limitation is that independent repeated cross-sections do not point-identify the cross-period correlation of the consumption-model errors; estimating it requires longitudinal information or additional identifying assumptions. To address this issue, \cite{dang2013measuring} propose a method that utilizes the country's data to estimate the correlation of error terms and obtain a point estimation instead of bounds. However, as highlighted by \cite{herault2019valid}, this method may not be suitable for developed countries, as the results differ significantly from the true values.
 
 As noted by \cite{bourguignon2020synthetic}, synthetic panels are highly dependent on the assumptions underlying the parameter estimation process. They propose an alternative method to estimate the correlation coefficient based on an AR(1) specification, and evaluate the results using real data from Mexico collected between 2002 and 2005. Although the results do not differ significantly from the real data, certain income mobility measures are highly sensitive to the value of the auto-regressive coefficient.
 
@@ -213,13 +213,13 @@ We use the DLLM method to estimate poverty dynamics, which based on  a consumpti
 	\label{eq1}
 \end{align}
 \begin{align}
-	C_{j2} = \beta'_2X_{j1} + \epsilon_{j2}
+	C_{j2} = \beta'_2X_{j2} + \epsilon_{j2}
 	\label{eq2}
 \end{align}
 Where, C is the variable of consumption, i and j represents the households, $X_i$ is the vector of time-invariant covariates, $\beta$ is the vector of parameters to be estimated, and $\epsilon$ is the error term. The consumption of year 1 for household j who is surveyed in year 2 is not observable, but it can be estimated. The two equations are estimated using Ordinary Least Squares (OLS) regression.
 The variables selected for the models are: Household’s head age, sex, number of years of education, number of children, area of living (urban/rural), province, household’s size, status of employment (employed/unemployed) and status of marriage (married/single) of the household's head.
 
-The DLLM method makes two key assumptions: first, that the underlying population sampled is the same in both years, and second, that the error terms are positive quadrant dependent, meaning that the correlation of the error terms is non-negative. Based on these assumptions, we can derive nonparametric bounds. The upper bound estimates are given by the probability that the two error terms are completely independent of each other. To derive the nonparametric upper bounds, for each household j in round 2, a random draw with replacement is taken from the empirical distribution of the predicted residuals and the consumption of year 1 is estimated using the following equation:
+The DLLM method makes two key assumptions: first, that the underlying population sampled is the same in both years, and second, that the error terms are positive quadrant dependent, which implies that the correlation of the error terms is non-negative. Based on these assumptions, we can derive nonparametric bounds. The upper bound estimates are given by the probability that the two error terms are completely independent of each other. To derive the nonparametric upper bounds, for each household j in round 2, a random draw with replacement is taken from the empirical distribution of the predicted residuals and the consumption of year 1 is estimated using the following equation:
 	 
 	 \begin{align*}
 	 	\widehat{C_{j1}^U} = \hat{\beta}'_1X_{j2} + \check{\epsilon_{j1}}
@@ -236,10 +236,15 @@ The DLLM method makes two key assumptions: first, that the underlying population
  \end{align*}
  Where scalar $\gamma$ is chosen to ensure the standard deviation of the imputed Year 1 residuals distribution equals $\hat{\sigma}_1$. 
 
-In order to narrow the bounds, DLLM proposed a parametric approach which assumes that the error terms have a bivariate normal distribution. The correlation between the error terms, denoted as $\rho$, is calculated using true panel data from other similar countries. This allows for the calculation of poverty dynamics statistics such as the probability of being poor in year 1 and also poor in year 2, denoted as $Prob(C_{ji}<z_1 \ and \ C_{j2}<z_2)$, using the bivariate normal cumulative distribution function, denoted as $\phi$, and the poverty lines for year 1 and year 2, denoted as $z_1$ and $z_2$ respectively:
+In order to narrow the bounds, \citet{dang2014using} propose a parametric approach that assumes that the two consumption-model errors have a bivariate normal distribution. Let $\rho=\operatorname{Corr}(\epsilon_{j1},\epsilon_{j2})$ denote the intertemporal correlation between the unexplained components of consumption for the same household, conditional on the observed covariates. Thus, $\rho$ measures persistence in unobserved household circumstances and shocks; it is not the correlation between observed consumption levels. Under this specification, the probability that household $j$ is poor in both periods is
 \begin{align}
-	Prob(C_{ji}<z_1 \ and \ C_{j2}<z_2) = \phi \left(\dfrac{z_1-\beta'_1X_{j1}}{\sigma_1}, \dfrac{z_2-\beta'_2X_{j2}}{\sigma_2} ,\rho \right)
+	\Pr(C_{j1}<z_1,\ C_{j2}<z_2) = \Phi_2 \left(\dfrac{z_1-\beta'_1X_{j2}}{\sigma_1}, \dfrac{z_2-\beta'_2X_{j2}}{\sigma_2};\rho \right)
+	\label{eq:joint-poor}
 \end{align}
+
+Independent repeated cross-sections identify the two marginal residual distributions, but they do not observe $\epsilon_{j1}$ and $\epsilon_{j2}$ jointly for the same household. Consequently, $\rho$ is not point-identified from the repeated cross-sections alone. A lower value of $\rho$ implies less persistence in unobserved welfare and therefore more estimated entry into and exit from poverty. A higher value implies greater persistence, increasing the poor--poor and nonpoor--nonpoor probabilities while reducing the two transition probabilities. In the DLLM terminology, the higher endpoint $\rho_H$ produces the lower bound on mobility and the upper bound on immobility, whereas the lower endpoint $\rho_S$ produces the upper bound on mobility and the lower bound on immobility \citep[pp.~113--120]{dang2014using}.
+
+We therefore report results over alternative plausible intervals for $\rho$ rather than imposing a single value. Specification~1 uses the full non-negative interval $[0,1]$. The panel estimates reported by \citet{dang2014using} for six developing countries range from 0.39 to 0.66; to allow for cross-country and model uncertainty, the authors evaluate the wider intervals $[0.2,0.8]$ and $[0.3,0.7]$, which form Specifications~2 and~3 in this study. These intervals are sensitivity assumptions, not estimates from the Iranian repeated cross-sections. Narrower intervals produce tighter bounds, but the additional precision depends on stronger external restrictions and carries a greater risk of excluding the true transition rate \citep[pp.~119--121]{dang2014using}.
 
 % \subsection{Poverty Line: The \$6.85 per Day (2017 PPP) Threshold}
 % The \$6.85 per day threshold, measured in 2017 Purchasing Power Parity (PPP), is a standardized international poverty line established by the World Bank for assessing poverty in upper-middle-income countries \citep{WorldBank2020}. It is derived from the International Comparison Program's (ICP) 2017 benchmark, which provides conversion factors that equalize purchasing power across currencies, enabling meaningful cross-country comparisons by accounting for differences in national price levels \citep{WorldBank2017}. This line is part of a tiered measurement system that also includes an extreme poverty line (\$2.15) and a lower-middle-income line (\$3.65), allowing for nuanced analysis of economic well-being across different development contexts \citep{Jolliffe2022}.
@@ -298,7 +303,7 @@ Nonetheless, PPP-based measures have recognized limitations. The construction of
 
 \section{Results}
 The present study examines poverty dynamics in two consequent years of 2019 and 2020, with a secondary objective of validating the results of the synthetic panel approach against those of true panel data. Table \autoref{tab:table1} presents the results for all urban and rural households. Three specifications are considered, with varying assumptions on the correlation between error terms ($\rho$).
-Specification 1 assumes that $\rho=1$ for the lower bounds and $\rho=0$ for the upper bounds, representing the parametric equivalent of the nonparametric bounds. Specification 2 approximates $\rho$ with 0.8 and 0.2 for the lower and upper bounds, respectively. Specification 3 further narrows the bounds by approximating $\rho$ with 0.7 and 0.3 for the lower and upper bounds, respectively. It is expected that each specification provides narrower bounds compared to the previous specification, however, this also increases the possibility that the true poverty dynamic rates from the panel data fall outside of the bounds.
+Specification 1 uses $\rho_H=1$ for the lower bounds and $\rho_S=0$ for the upper bounds, representing the parametric analogue of the nonparametric bounds. Specification 2 uses $\rho_H=0.8$ and $\rho_S=0.2$ as the higher and lower endpoints, respectively. Specification 3 further narrows the bounds by using $\rho_H=0.7$ and $\rho_S=0.3$. It is expected that each specification provides narrower bounds compared to the previous specification, however, this also increases the possibility that the true poverty dynamic rates from the panel data fall outside of the bounds.
 
 
 
@@ -520,8 +525,8 @@ Full regression results are provided in Tables 2.1a and 2.1b in Appendix ??. \\
 Full regression results are provided in Tables 2.1a and 2.1b in Appendix ??. \\
 2. All calculations are weighted using population weights for each survey round. Standard errors in parentheses.\\
 3. Number of replications for the estimates is 500.\\
-4. Specification 1 assumes that ρ = 1 and ρ = 0 for the lower bounds and upper bounds respectively and is the parametric equivalence of the nonparametric bounds. Specification 2
-approximates ρ with 0.8 and 0.2, and Specification 3 approximates ρ with 0.7 and 0.3 for the lower bounds and upper bounds respectively. The regressors in all regressions are the
+4. Specification 1 uses $\rho_H=1$ and $\rho_S=0$ for the lower and upper bounds, respectively, and is the parametric analogue of the nonparametric bounds. Specification 2
+uses $\rho_H=0.8$ and $\rho_S=0.2$, and Specification 3 uses $\rho_H=0.7$ and $\rho_S=0.3$ for the lower and upper bounds, respectively. The regressors in all regressions are the
 same as in Model 1 in Table 1 plus an urban/rural dummy variable.
 5. Household heads' ages are restricted to between 25 and 55 in the first survey round.}
 \end{table}
@@ -606,8 +611,8 @@ Tables \autoref{table4} and \autoref{table5} present the poverty dynamics of urb
 Full regression results are provided in Tables 2.1a and 2.1b in Appendix ??. \\
 2. All calculations are weighted using population weights for each survey round. Standard errors in parentheses.\\
 3. Number of replications for the estimates is 500.\\
-4. Specification 1 assumes that ρ = 1 and ρ = 0 for the lower bounds and upper bounds respectively and is the parametric equivalence of the nonparametric bounds. Specification 2
-approximates ρ with 0.8 and 0.2, and Specification 3 approximates ρ with 0.7 and 0.3 for the lower bounds and upper bounds respectively. The regressors in all regressions are the
+4. Specification 1 uses $\rho_H=1$ and $\rho_S=0$ for the lower and upper bounds, respectively, and is the parametric analogue of the nonparametric bounds. Specification 2
+uses $\rho_H=0.8$ and $\rho_S=0.2$, and Specification 3 uses $\rho_H=0.7$ and $\rho_S=0.3$ for the lower and upper bounds, respectively. The regressors in all regressions are the
 same as in Model 1 in Table 1 plus an urban/rural dummy variable.
 5. Household heads' ages are restricted to between 25 and 55 in the first survey round.} 
     \end{minipage}
@@ -1021,8 +1026,8 @@ N
 Full regression results are provided in Tables 2.1a and 2.1b in Appendix ??. \\
 2. All calculations are weighted using population weights for each survey round. Standard errors in parentheses.\\
 3. Number of replications for the estimates is 500.\\
-4. Specification 1 assumes that ρ = 1 and ρ = 0 for the lower bounds and upper bounds respectively and is the parametric equivalence of the nonparametric bounds. Specification 2
-approximates ρ with 0.8 and 0.2, and Specification 3 approximates ρ with 0.7 and 0.3 for the lower bounds and upper bounds respectively. The regressors in all regressions are the
+4. Specification 1 uses $\rho_H=1$ and $\rho_S=0$ for the lower and upper bounds, respectively, and is the parametric analogue of the nonparametric bounds. Specification 2
+uses $\rho_H=0.8$ and $\rho_S=0.2$, and Specification 3 uses $\rho_H=0.7$ and $\rho_S=0.3$ for the lower and upper bounds, respectively. The regressors in all regressions are the
 same as in Model 1 in Table 1 plus an urban/rural dummy variable.
 5. Household heads' ages are restricted to between 25 and 55 in the first survey round.}
 \end{table}
@@ -1176,8 +1181,8 @@ N
 Full regression results are provided in Tables 2.1a and 2.1b in Appendix ??. \\
 2. All calculations are weighted using population weights for each survey round. Standard errors in parentheses.\\
 3. Number of replications for the estimates is 500.\\
-4. Specification 1 assumes that ρ = 1 and ρ = 0 for the lower bounds and upper bounds respectively and is the parametric equivalence of the nonparametric bounds. Specification 2
-approximates ρ with 0.8 and 0.2, and Specification 3 approximates ρ with 0.7 and 0.3 for the lower bounds and upper bounds respectively. The regressors in all regressions are the
+4. Specification 1 uses $\rho_H=1$ and $\rho_S=0$ for the lower and upper bounds, respectively, and is the parametric analogue of the nonparametric bounds. Specification 2
+uses $\rho_H=0.8$ and $\rho_S=0.2$, and Specification 3 uses $\rho_H=0.7$ and $\rho_S=0.3$ for the lower and upper bounds, respectively. The regressors in all regressions are the
 same as in Model 1 in Table 1 plus an urban/rural dummy variable.
 5. Household heads' ages are restricted to between 25 and 55 in the first survey round.}
 \end{table}
@@ -1283,8 +1288,8 @@ N
 Full regression results are provided in Tables 2.1a and 2.1b in Appendix ??. \\
 2. All calculations are weighted using population weights for each survey round. Standard errors in parentheses.\\
 3. Number of replications for the estimates is 500.\\
-4. Specification 1 assumes that ρ = 1 and ρ = 0 for the lower bounds and upper bounds respectively and is the parametric equivalence of the nonparametric bounds. Specification 2
-approximates ρ with 0.8 and 0.2, and Specification 3 approximates ρ with 0.7 and 0.3 for the lower bounds and upper bounds respectively. The regressors in all regressions are the
+4. Specification 1 uses $\rho_H=1$ and $\rho_S=0$ for the lower and upper bounds, respectively, and is the parametric analogue of the nonparametric bounds. Specification 2
+uses $\rho_H=0.8$ and $\rho_S=0.2$, and Specification 3 uses $\rho_H=0.7$ and $\rho_S=0.3$ for the lower and upper bounds, respectively. The regressors in all regressions are the
 same as in Model 1 in Table 1 plus an urban/rural dummy variable.
 5. Household heads' ages are restricted to between 25 and 55 in the first survey round.}
 \end{table}
@@ -1439,8 +1444,8 @@ N
 Full regression results are provided in Tables 2.1a and 2.1b in Appendix ??. \\
 2. All calculations are weighted using population weights for each survey round. Standard errors in parentheses.\\
 3. Number of replications for the estimates is 500.\\
-4. Specification 1 assumes that ρ = 1 and ρ = 0 for the lower bounds and upper bounds respectively and is the parametric equivalence of the nonparametric bounds. Specification 2
-approximates ρ with 0.8 and 0.2, and Specification 3 approximates ρ with 0.7 and 0.3 for the lower bounds and upper bounds respectively. The regressors in all regressions are the
+4. Specification 1 uses $\rho_H=1$ and $\rho_S=0$ for the lower and upper bounds, respectively, and is the parametric analogue of the nonparametric bounds. Specification 2
+uses $\rho_H=0.8$ and $\rho_S=0.2$, and Specification 3 uses $\rho_H=0.7$ and $\rho_S=0.3$ for the lower and upper bounds, respectively. The regressors in all regressions are the
 same as in Model 1 in Table 1 plus an urban/rural dummy variable.
 5. Household heads' ages are restricted to between 25 and 55 in the first survey round.}
 \end{table}
@@ -1495,8 +1500,8 @@ N
 Full regression results are provided in Tables 2.1a and 2.1b in Appendix ??. \\
 2. All calculations are weighted using population weights for each survey round. Standard errors in parentheses.\\
 3. Number of replications for the estimates is 500.\\
-4. Specification 1 assumes that ρ = 1 and ρ = 0 for the lower bounds and upper bounds respectively and is the parametric equivalence of the nonparametric bounds. Specification 2
-approximates ρ with 0.8 and 0.2, and Specification 3 approximates ρ with 0.7 and 0.3 for the lower bounds and upper bounds respectively. The regressors in all regressions are the
+4. Specification 1 uses $\rho_H=1$ and $\rho_S=0$ for the lower and upper bounds, respectively, and is the parametric analogue of the nonparametric bounds. Specification 2
+uses $\rho_H=0.8$ and $\rho_S=0.2$, and Specification 3 uses $\rho_H=0.7$ and $\rho_S=0.3$ for the lower and upper bounds, respectively. The regressors in all regressions are the
 same as in Model 1 in Table 1 plus an urban/rural dummy variable.
 5. Household heads' ages are restricted to between 25 and 55 in the first survey round.}
 \end{table}
