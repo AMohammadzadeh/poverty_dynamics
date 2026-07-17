@@ -279,6 +279,14 @@ Run from Stata with:
 do "E:\my_papers\poverty_dynamics\figures\population_stability_9899.do"
 ```
 
+## Git Workflow
+
+- Make changes on a dedicated `codex/*` branch; do not work directly on local `main`.
+- Commit the completed and verified changes on that branch, then push the branch to GitHub.
+- Open a pull request targeting `main` and review the PR before merging.
+- Merge the pull request on GitHub. Do not merge a feature branch into local `main`.
+- After the GitHub merge succeeds, update local `main` only by switching to it and pulling the merged remote branch.
+
 ## Working Principles
 
 - Use `rg`/`Select-String` for searches before broad edits.
